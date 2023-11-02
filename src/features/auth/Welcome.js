@@ -1,24 +1,32 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const Welcome = () => {
+  const date = new Date();
+  const today = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "full",
+    timeStyle: "long",
+  }).format(date);
 
-    const date = new Date()
-    const today = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(date)
+  const content = (
+    <section className="welcome">
+      <p>{today}</p>
 
-    const content = (
-        <section className="welcome">
+      <h1>Welcome!</h1>
+      <p>
+        <Link to="/dash/courses">View Petitions</Link>
+      </p>
+      <p>
+        <Link to="/dash/courses">Create Petition</Link>
+      </p>
+      <p>
+        <Link to="/dash/courses">View Courses</Link>
+      </p>
+      <p>
+        <Link to="/dash/users">View/Edit Student Information</Link>
+      </p>
+    </section>
+  );
 
-            <p>{today}</p>
-
-            <h1>Welcome!</h1>
-
-            <p><Link to="/dash/notes">View techNotes</Link></p>
-
-            <p><Link to="/dash/users">View User Settings</Link></p>
-
-        </section>
-    )
-
-    return content
-}
-export default Welcome
+  return content;
+};
+export default Welcome;

@@ -177,3 +177,11 @@ a:focus-visible {
   width: auto;
   height: auto;
 }
+
+
+.dash-header__title{
+padding: 1rem;
+}
+.dash-container{
+  margin-left: 2em;
+}
