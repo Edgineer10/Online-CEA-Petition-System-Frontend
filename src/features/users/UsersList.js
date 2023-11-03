@@ -30,10 +30,13 @@ const UsersList = () => {
         <thead className="table__thead">
           <tr>
             <th scope="col" className="table__th user__username">
-              Username
+              ID Number
             </th>
             <th scope="col" className="table__th user__roles">
-              Roles
+              Name
+            </th>
+            <th scope="col" className="table__th user__roles">
+              Course & Year
             </th>
             <th scope="col" className="table__th user__edit">
               Edit

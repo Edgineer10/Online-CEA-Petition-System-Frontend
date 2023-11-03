@@ -6,6 +6,10 @@ import DashLayout from "./components/DashLayout.js";
 import Welcome from "./features/auth/Welcome";
 import CoursesList from "./features/courses/CoursesList";
 import UsersList from "./features/users/UsersList";
+import EditUser from "./features/users/EditUser";
+//import NewUserForm from "./features/users/NewUserForm";
+import EditCourse from "./features/courses/EditCourse";
+import NewCourse from "./features/courses/NewCourse";
 
 function App() {
   return (
@@ -17,13 +21,20 @@ function App() {
         <Route path="dash" element={<DashLayout />}>
           <Route index element={<Welcome />} />
 
-          <Route path="courses">
-            <Route index element={<CoursesList />} />
-          </Route>
+
 
           <Route path="users">
             <Route index element={<UsersList />} />
+            <Route path=":id" element={<EditUser />} />
+            {/* <Route path="new" element={<NewUserForm />} /> */}
           </Route>
+
+          <Route path="courses">
+            <Route index element={<CoursesList />} />
+            <Route path=":courseCode" element={<EditCourse />} />
+            <Route path="new" element={<NewCourse />} />
+          </Route>
+
         </Route>
         {/* End Dash */}
       </Route>
