@@ -51,8 +51,13 @@ const NewUserForm = () => {
     const onMiddleNameChanged = e => setMiddleName(e.target.value)
     const onBirthdayChanged = e => setBirthday(e.target.value)
     const onYearChanged = e => setYear(e.target.value)
-    const onsetCourseProgChanged = e => setsetCourseProg(e.target.value)
-
+    const onsetCourseProgChanged = e => {
+        const values = Array.from(
+            e.target.selectedOptions, //HTMLCollection 
+            (option) => option.value
+        )
+        setsetCourseProg(values)
+    }
 
 
     const canSave = [!idNumber || !password || !firstName || !lastName || !middleName || !birthday || !year].every(Boolean) && !isLoading
