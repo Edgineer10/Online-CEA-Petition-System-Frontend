@@ -1,30 +1,32 @@
 import { useState, useEffect } from "react";
-import { useAddNewUserMutation } from "./usersApiSlice";
+import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 
-const USER_REGEX = /^[A-z]{3,20}$/;
-const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
+const EditUserForm = ({ user }) => {
+  const [updateUser, { isLoading, isSuccess, isError, error }] =
+    useUpdateUserMutation();
 
-const NewUserForm = () => {
-  const [addNewUser, { isLoading, isSuccess, isError, error }] =
-    useAddNewUserMutation();
+  const [
+    deleteUser,
+    { isSuccess: isDelSuccess, isError: isDelError, error: delerror },
+  ] = useDeleteUserMutation();
 
   const navigate = useNavigate();
 
-  const [idNumber, setIdNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [year, setYear] = useState(1);
-  const [courseProg, setCourseProg] = useState("");
-
+  const [idNumber, setIdNumber] = useState(user.idNumber);
+  const [password, setPassword] = useState(user.password);
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [middleName, setMiddleName] = useState(user.middleName);
+  const [birthday, setBirthday] = useState(user.birthday);
+  const [year, setYear] = useState(user.year);
+  const [courseProg, setCourseProg] = useState(user.courseProg);
+  const [active, setActive] = useState(user.active);
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess || isDelSuccess) {
       setIdNumber("");
       setPassword("");
       setFirstName("");
@@ -35,7 +37,7 @@ const NewUserForm = () => {
       setCourseProg("");
       navigate("/dash/users");
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, isDelSuccess, navigate]);
 
   const onIdNumberChanged = (e) => setIdNumber(e.target.value);
   const onPasswordChanged = (e) => setPassword(e.target.value);
@@ -45,11 +47,11 @@ const NewUserForm = () => {
   const onBirthdayChanged = (e) => setBirthday(e.target.value);
   const onYearChanged = (e) => setYear(e.target.value);
   const onCourseProgChanged = (e) => setCourseProg(e.target.value);
+  const onActiveChanged = () => setActive((prev) => !prev);
 
   const canSave =
     [
       !idNumber ||
-        !password ||
         !firstName ||
         !lastName ||
         !middleName ||
@@ -61,29 +63,55 @@ const NewUserForm = () => {
   const onSaveUserClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      await addNewUser({
-        idNumber,
-        password,
-        firstName,
-        lastName,
-        middleName,
-        birthday,
-        year,
-        courseProg,
-      });
+      console.log(
+        idNumber +
+          firstName +
+          lastName +
+          middleName +
+          birthday +
+          year +
+          courseProg +
+          active
+      );
+      if (password) {
+        await updateUser({
+          idNumber,
+          password,
+          firstName,
+          lastName,
+          middleName,
+          birthday,
+          year,
+          courseProg,
+          active,
+        });
+      } else {
+        await updateUser({
+          idNumber,
+          firstName,
+          lastName,
+          middleName,
+          birthday,
+          year,
+          courseProg,
+          active,
+        });
+      }
     }
   };
+  const onDeleteUserClicked = async () => {
+    await deleteUser({ id: user.id });
+  };
 
-  const options = Object.values(PROGRAM).map((program) => {
+  const options = Object.keys(PROGRAM).map((program) => {
     return (
       <option key={program} value={program}>
-        {" "}
         {program}
       </option>
     );
   });
 
-  const errClass = isError ? "errmsg" : "offscreen";
+  const errClass = isError || isDelError ? "errmsg" : "offscreen";
   const validNumberClass = !idNumber ? "form__input--incomplete" : "";
   const validPasswordClass = !password ? "form__input--incomplete" : "";
   const validFirstNameClass = !firstName ? "form__input--incomplete" : "";
@@ -92,6 +120,9 @@ const NewUserForm = () => {
   const validBirthdayClass = !birthday ? "form__input--incomplete" : "";
   const validYearClass = !year ? "form__input--incomplete" : "";
   const validCourseProgClass = !courseProg ? "form__input--incomplete" : "";
+  const Bdate = new Date(user.birthday);
+
+  const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
   const content = (
     <>
@@ -99,15 +130,22 @@ const NewUserForm = () => {
 
       <form className="form" onSubmit={onSaveUserClicked}>
         <div className="form__title-row">
-          <h2>New User</h2>
+          <h2>Edit User</h2>
           <div className="form__action-buttons">
             <button className="icon-button" title="Save" disabled={!canSave}>
               <FontAwesomeIcon icon={faSave} />
             </button>
+            <button
+              className="icon-button"
+              title="Delete"
+              onClick={onDeleteUserClicked}
+            >
+              <FontAwesomeIcon icon={faTrashCan} />
+            </button>
           </div>
         </div>
         <label className="form__label" htmlFor="idnumber">
-          ID Number: <span className="nowrap">[3-20 letters]</span>
+          ID Number:
         </label>
         <input
           className={`form__input ${validNumberClass}`}
@@ -131,7 +169,7 @@ const NewUserForm = () => {
           onChange={onPasswordChanged}
         />
         <label className="form__label" htmlFor="firstname">
-          First Name: <span className="nowrap">[3-20 letters]</span>
+          First Name:
         </label>
         <input
           className={`form__input ${validFirstNameClass}`}
@@ -143,7 +181,7 @@ const NewUserForm = () => {
           onChange={onFirstNameChanged}
         />
         <label className="form__label" htmlFor="middleName">
-          Middle Name: <span className="nowrap">[3-20 letters]</span>
+          Middle Name:
         </label>
         <input
           className={`form__input ${validMiddleNameClass}`}
@@ -156,7 +194,7 @@ const NewUserForm = () => {
         />
 
         <label className="form__label" htmlFor="lastname">
-          Last Name: <span className="nowrap">[3-20 letters]</span>
+          Last Name:
         </label>
         <input
           className={`form__input ${validLastNameClass}`}
@@ -176,7 +214,13 @@ const NewUserForm = () => {
           name="birthday"
           type="date"
           autoComplete="off"
-          value={birthday}
+          value={
+            Bdate.getFullYear() +
+            "-" +
+            (Bdate.getMonth() + 1) +
+            "-" +
+            Bdate.getDate()
+          }
           onChange={onBirthdayChanged}
         />
         <label className="form__label" htmlFor="year">
@@ -186,7 +230,7 @@ const NewUserForm = () => {
           className={`form__input ${validYearClass}`}
           id="year"
           name="year"
-          type="date"
+          type="number"
           autoComplete="off"
           value={year}
           onChange={onYearChanged}
@@ -199,17 +243,29 @@ const NewUserForm = () => {
           id="program"
           name="program"
           className={`form__select ${validCourseProgClass}`}
-          multiple={false}
           size="1"
-          value={courseProg}
           onChange={onCourseProgChanged}
         >
           {options}
         </select>
+        <label
+          className="form__label form__checkbox-container"
+          htmlFor="user-active"
+        >
+          ACTIVE:
+          <input
+            className="form__checkbox"
+            id="user-active"
+            name="user-active"
+            type="checkbox"
+            checked={active}
+            onChange={onActiveChanged}
+          />
+        </label>
       </form>
     </>
   );
 
   return content;
 };
-export default NewUserForm;
+export default EditUserForm;

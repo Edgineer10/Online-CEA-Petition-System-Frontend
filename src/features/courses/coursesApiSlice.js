@@ -12,7 +12,6 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
         const loadedCourses = responseData.map((course) => {
           course.id = course._id;
@@ -30,46 +29,42 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       },
     }),
     addNewCourse: builder.mutation({
-      query: initialCourseData => ({
-        url: '/courses',
-        method: 'POST',
+      query: (initialCourseData) => ({
+        url: "/courses",
+        method: "POST",
         body: {
           ...initialCourseData,
-        }
+        },
       }),
-      invalidatesTags: [
-        { type: 'Course', id: "LIST" }
-      ]
+      invalidatesTags: [{ type: "Course", id: "LIST" }],
     }),
     updateCourse: builder.mutation({
-      query: initialCourseData => ({
-        url: '/courses',
-        method: 'PATCH',
+      query: (initialCourseData) => ({
+        url: "/courses",
+        method: "PATCH",
         body: {
           ...initialCourseData,
-        }
+        },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'Course', id: arg.id }
-      ]
+      invalidatesTags: (result, error, arg) => [{ type: "Course", id: arg.id }],
     }),
     deleteCourse: builder.mutation({
       query: ({ id }) => ({
         url: `/courses`,
-        method: 'DELETE',
-        body: { id }
+        method: "DELETE",
+        body: { id },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'Course', id: arg.id }
-      ]
+      invalidatesTags: (result, error, arg) => [{ type: "Course", id: arg.id }],
     }),
   }),
 });
 
-export const { useGetCoursesQuery,
+export const {
+  useGetCoursesQuery,
   useAddNewCourseMutation,
   useUpdateCourseMutation,
-  useDeleteCourseMutation, } = coursesApiSlice;
+  useDeleteCourseMutation,
+} = coursesApiSlice;
 
 // returns the query result object
 export const selectCoursesResult =
