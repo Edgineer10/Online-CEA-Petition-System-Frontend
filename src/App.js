@@ -30,7 +30,7 @@ function App() {
 
             <Route path="courses">
               <Route index element={<CoursesList />} />
-              <Route path=":courseCode" element={<EditCourse />} />
+              <Route path=":id" element={<EditCourse />} />
               <Route path="new" element={<NewCourse />} />
             </Route>
           </Route>

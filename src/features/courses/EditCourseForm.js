@@ -1,35 +1,33 @@
 import { useState, useEffect } from "react";
-import { useAddNewCourseMutation } from "./coursesApiSlice";
+import { useUpdateCourseMutation, useDeleteCourseMutation } from "./coursesApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 
+const EditCourseForm = ({ course }) => {
+    const [updateCourse, { isLoading, isSuccess, isError, error }] =
+        useUpdateCourseMutation();
 
-const NewCourseForm = () => {
-    const [addNewCourse, { isLoading, isSuccess, isError, error }] =
-        useAddNewCourseMutation();
+    const [
+        deleteCourse,
+        { isSuccess: isDelSuccess, isError: isDelError, error: delerror },
+    ] = useDeleteCourseMutation();
 
     const navigate = useNavigate();
-    const options = Object.keys(PROGRAM).map((program) => {
-        return (
-            <option key={program} value={program}>
-                {program}
-            </option>
-        );
-    });
+
+    const [courseProg, setCourseProg] = useState(course.courseProg);
+    const [currYear, setCurrYear] = useState(course.currYear);
+    const [courseCode, setCourseCode] = useState(course.courseCode);
+    const [descTitle, setDescTitle] = useState(course.descTitle);
+    const [unit, setUnit] = useState(course.unit);
+    const [courseYear, setCourseYear] = useState(course.courseYear);
+    const [courseSem, setCourseSem] = useState(course.courseSem);
 
 
-    const [courseProg, setCourseProg] = useState([]);
-    const [currYear, setCurrYear] = useState(1);
-    const [courseCode, setCourseCode] = useState("");
-    const [descTitle, setDescTitle] = useState("");
-    const [unit, setUnit] = useState(3);
-    const [courseYear, setCourseYear] = useState(1);
-    const [courseSem, setCourseSem] = useState(1);
-
+    console.log();
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess || isDelSuccess) {
             setCourseProg([]);
             setCurrYear("");
             setCourseCode("");
@@ -39,7 +37,8 @@ const NewCourseForm = () => {
             setCourseSem("");
             navigate("/dash/courses");
         }
-    }, [isSuccess, navigate]);
+    }, [isSuccess, isDelSuccess, navigate]);
+
     const onCourseProgChanged = (e) => {
         const values = Array.from(
             e.target.selectedOptions, //HTMLCollection 
@@ -53,6 +52,7 @@ const NewCourseForm = () => {
     const onUnitChanged = (e) => setUnit(e.target.value);
     const onCourseYearChanged = (e) => setCourseYear(e.target.value);
     const onCourseSemChanged = (e) => setCourseSem(e.target.value);
+
     const canSave =
         [
             courseProg.length ||
@@ -67,7 +67,8 @@ const NewCourseForm = () => {
     const onSaveCourseClicked = async (e) => {
         e.preventDefault();
         if (canSave) {
-            await addNewCourse({
+            await updateCourse({
+                id: course.id,
                 currYear,
                 courseCode,
                 descTitle,
@@ -79,8 +80,19 @@ const NewCourseForm = () => {
         }
     };
 
+    const onDeleteCourseClicked = async () => {
+        await deleteCourse({ id: course.id });
+    };
 
-    const errClass = isError ? "errmsg" : "offscreen";
+    const options = Object.keys(PROGRAM).map((program) => {
+        return (
+            <option key={program} value={program}>
+                {program}
+            </option>
+        );
+    });
+
+    const errClass = isError || isDelError ? "errmsg" : "offscreen";
     const validCurrYearClass = !currYear ? "form__input--incomplete" : "";
     const validCourseCodeClass = !courseCode ? "form__input--incomplete" : "";
     const validDescTitleClass = !descTitle ? "form__input--incomplete" : "";
@@ -89,16 +101,26 @@ const NewCourseForm = () => {
     const validCourseSemClass = !courseSem ? "form__input--incomplete" : "";
     const validCourseProgClass = !courseProg ? "form__input--incomplete" : "";
 
+    const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
+
     const content = (
         <>
-            <p className={errClass}>{error?.data?.message}</p>
+            <p className={errClass}>{errContent}</p>
 
             <form className="form" onSubmit={onSaveCourseClicked}>
                 <div className="form__title-row">
-                    <h2>New Course</h2>
+                    <h2>Edit Course</h2>
                     <div className="form__action-buttons">
                         <button className="icon-button" title="Save" disabled={!canSave}>
                             <FontAwesomeIcon icon={faSave} />
+                        </button>
+
+                        <button
+                            className="icon-button"
+                            title="Delete"
+                            onClick={onDeleteCourseClicked}
+                        >
+                            <FontAwesomeIcon icon={faTrashCan} />
                         </button>
                     </div>
                 </div>
@@ -199,4 +221,4 @@ const NewCourseForm = () => {
 
     return content;
 };
-export default NewCourseForm;
+export default EditCourseForm;

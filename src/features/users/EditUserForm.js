@@ -16,7 +16,6 @@ const EditUserForm = ({ user }) => {
 
   const navigate = useNavigate();
 
-  const [idNumber, setIdNumber] = useState(user.idNumber);
   const [password, setPassword] = useState(user.password);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
@@ -25,9 +24,10 @@ const EditUserForm = ({ user }) => {
   const [year, setYear] = useState(user.year);
   const [courseProg, setCourseProg] = useState(user.courseProg);
   const [active, setActive] = useState(user.active);
+
+  console.log();
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
-      setIdNumber("");
       setPassword("");
       setFirstName("");
       setLastName("");
@@ -39,43 +39,34 @@ const EditUserForm = ({ user }) => {
     }
   }, [isSuccess, isDelSuccess, navigate]);
 
-  const onIdNumberChanged = (e) => setIdNumber(e.target.value);
   const onPasswordChanged = (e) => setPassword(e.target.value);
   const onFirstNameChanged = (e) => setFirstName(e.target.value);
   const onLastNameChanged = (e) => setLastName(e.target.value);
   const onMiddleNameChanged = (e) => setMiddleName(e.target.value);
   const onBirthdayChanged = (e) => setBirthday(e.target.value);
   const onYearChanged = (e) => setYear(e.target.value);
-  const onCourseProgChanged = (e) => setCourseProg(e.target.value);
+  const onCourseProgChanged = (e) => {
+    console.log(e.target.value)
+    setCourseProg(e.target.value)
+  };
   const onActiveChanged = () => setActive((prev) => !prev);
 
   const canSave =
     [
-      !idNumber ||
-        !firstName ||
-        !lastName ||
-        !middleName ||
-        !birthday ||
-        !year ||
-        !courseProg,
+      firstName ||
+      lastName ||
+      middleName ||
+      birthday ||
+      year ||
+      courseProg,
     ].every(Boolean) && !isLoading;
 
   const onSaveUserClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      console.log(
-        idNumber +
-          firstName +
-          lastName +
-          middleName +
-          birthday +
-          year +
-          courseProg +
-          active
-      );
       if (password) {
         await updateUser({
-          idNumber,
+          id: user.id,
           password,
           firstName,
           lastName,
@@ -87,7 +78,7 @@ const EditUserForm = ({ user }) => {
         });
       } else {
         await updateUser({
-          idNumber,
+          id: user.id,
           firstName,
           lastName,
           middleName,
@@ -112,7 +103,6 @@ const EditUserForm = ({ user }) => {
   });
 
   const errClass = isError || isDelError ? "errmsg" : "offscreen";
-  const validNumberClass = !idNumber ? "form__input--incomplete" : "";
   const validPasswordClass = !password ? "form__input--incomplete" : "";
   const validFirstNameClass = !firstName ? "form__input--incomplete" : "";
   const validLastNameClass = !lastName ? "form__input--incomplete" : "";
@@ -126,7 +116,7 @@ const EditUserForm = ({ user }) => {
 
   const content = (
     <>
-      <p className={errClass}>{error?.data?.message}</p>
+      <p className={errClass}>{errContent}</p>
 
       <form className="form" onSubmit={onSaveUserClicked}>
         <div className="form__title-row">
@@ -144,18 +134,6 @@ const EditUserForm = ({ user }) => {
             </button>
           </div>
         </div>
-        <label className="form__label" htmlFor="idnumber">
-          ID Number:
-        </label>
-        <input
-          className={`form__input ${validNumberClass}`}
-          id="idnumber"
-          name="idnumber"
-          type="text"
-          autoComplete="off"
-          value={idNumber}
-          onChange={onIdNumberChanged}
-        />
 
         <label className="form__label" htmlFor="password">
           Password:{" "}

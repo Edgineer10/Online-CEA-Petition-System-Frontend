@@ -20,7 +20,7 @@ const User = ({ userId }) => {
       <tr className="table__row user">
         <td className={`table__cell ${cellStatus}`}>{user.idNumber}</td>
         <td className={`table__cell ${cellStatus}`}>{user.lastName + ', ' + user.firstName + ' ' + user.middleName}</td>
-        <td className={`table__cell ${cellStatus}`}>{user.courseProg + ' ' + user.Year}</td>
+        <td className={`table__cell ${cellStatus}`}>{user.courseProg + ' ' + user.year}</td>
         <td className={`table__cell ${cellStatus}`}>
           <button className="icon-button table__button" onClick={handleEdit}>
             <FontAwesomeIcon icon={faPenToSquare} />

@@ -13,10 +13,10 @@ const Welcome = () => {
 
       <h1>Welcome!</h1>
       <p>
-        <Link to="/dash/courses">View Petitions</Link>
+        <Link to="/dash/petitions">View Petitions</Link>
       </p>
       <p>
-        <Link to="/dash/courses">Create Petition</Link>
+        <Link to="/dash/petitions/new">Create Petition</Link>
       </p>
       <p>
         <Link to="/dash/courses">View Courses</Link>
