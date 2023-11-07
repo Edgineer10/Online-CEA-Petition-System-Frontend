@@ -205,6 +205,15 @@ tr {
   grid-template-columns: 2fr 1fr 3fr 1fr 1fr 1fr 1fr;
 
 }
+.table-view-pet{
+  
+  grid-template-columns: 3fr 2fr 4fr 1fr 2fr ;
+}
+.table--petitionee{
+  
+  grid-template-columns: 2fr 4fr 2fr  ;
+}
+
 
 .table__button {
   padding: 0.25em;

@@ -12,7 +12,9 @@ const Prefetch = () => {
       coursesApiSlice.endpoints.getCourses.initiate()
     );
     const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate());
-    const petitions = store.dispatch(petitionsApiSlice.endpoints.getPetitions.initiate());
+    const petitions = store.dispatch(
+      petitionsApiSlice.endpoints.getPetitions.initiate()
+    );
 
     return () => {
       console.log("unsubscribing");

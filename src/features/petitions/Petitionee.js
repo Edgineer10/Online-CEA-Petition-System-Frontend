@@ -3,16 +3,14 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { selectUserById } from "./usersApiSlice";
+import { selectUserById } from "../users/usersApiSlice";
 
-const User = ({ userId }) => {
+const Petitionee = ({ userId }) => {
   const user = useSelector((state) => selectUserById(state, userId));
 
   const navigate = useNavigate();
 
   if (user) {
-    const handleEdit = () => navigate(`/dash/users/${userId}`);
-
     const cellStatus = user.active ? "" : "table__cell--inactive";
 
     return (
@@ -24,13 +22,8 @@ const User = ({ userId }) => {
         <td className={`table__cell ${cellStatus}`}>
           {user.courseProg + " " + user.year}
         </td>
-        <td className={`table__cell ${cellStatus}`}>
-          <button className="icon-button table__button" onClick={handleEdit}>
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </button>
-        </td>
       </tr>
     );
   } else return null;
 };
-export default User;
+export default Petitionee;
