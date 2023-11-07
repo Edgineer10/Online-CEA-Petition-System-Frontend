@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ const Petition = ({ petitionId }) => {
                 <td className={`table__cell `}>{petition.petitionee.length}</td>
                 <td className={`table__cell `}>
                     <button className="icon-button table__button" onClick={handleView}>
-                        <FontAwesomeIcon icon={faPenToSquare} />
+                        <FontAwesomeIcon icon={faEye} />
                     </button>
                 </td>
             </tr>

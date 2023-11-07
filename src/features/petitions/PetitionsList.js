@@ -38,7 +38,7 @@ const PetitionsList = () => {
                         <th scope="col" className="table__th note__status">Units</th>
                         <th scope="col" className="table__th note__status">Schedule</th>
                         <th scope="col" className="table__th note__status">Petitionee/s</th>
-                        <th scope="col" className="table__th note__status">View</th>
+                        <th scope="col" className="table__th note__status">View/join</th>
                     </tr>
                 </thead>
                 <tbody>
