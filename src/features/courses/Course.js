@@ -17,11 +17,11 @@ const Course = ({ courseId }) => {
 
         return (
             <tr className="table__row">
-                <td className="table__cell ">{course.courseProg + " " + course.currYear}</td>
-                <td className="table__cell ">{course.courseYear + " " + course.courseSem}</td>
+                <td className="table__cell ">{course.courseProg.join(", ") + " " + course.currYear}</td>
+                <td className="table__cell ">{"year: " + course.courseYear + " term: " + course.courseSem}</td>
                 <td className="table__cell ">{course.courseCode}</td>
                 <td className="table__cell ">{course.descTitle}</td>
-                <td className="table__cell ">{course.units}</td>
+                <td className="table__cell ">{course.unit}</td>
 
                 <td className="table__cell">
                     <button

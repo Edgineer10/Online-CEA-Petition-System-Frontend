@@ -90,7 +90,7 @@ const NewCourseForm = ({ courses, user }) => {
                 </select>
 
                 <label className="form__label" htmlFor="schedule">
-                    Schedule:{" "}
+                    Preferred Schedule:{" "}
                 </label>
                 <input
                     className={`form__input ${validScheduleClass}`}

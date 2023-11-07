@@ -34,7 +34,7 @@ const CoursesList = () => {
         <thead className="table__thead">
           <tr>
             <th scope="col" className="table__th note__status">Course Program & Year</th>
-            <th scope="col" className="table__th note__status">Year & Sem</th>
+            <th scope="col" className="table__th note__status">Year & Term</th>
             <th scope="col" className="table__th note__status">Course Code</th>
             <th scope="col" className="table__th note__status">Descriptive Title</th>
             <th scope="col" className="table__th note__status">Units</th>
