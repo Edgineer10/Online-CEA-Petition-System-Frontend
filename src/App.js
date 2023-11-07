@@ -11,7 +11,8 @@ import NewUserForm from "./features/users/NewUserForm";
 import EditCourse from "./features/courses/EditCourse";
 import NewCourse from "./features/courses/NewCourse";
 import Prefetch from "./features/auth/Prefetch.js";
-
+import NewPetition from "./features/petitions/NewPetition.js";
+import PetitionsList from "./features/petitions/PetitionsList.js";
 function App() {
   return (
     <Routes>
@@ -32,6 +33,11 @@ function App() {
               <Route index element={<CoursesList />} />
               <Route path=":id" element={<EditCourse />} />
               <Route path="new" element={<NewCourse />} />
+            </Route>
+
+            <Route path="petitions">
+              <Route index element={<PetitionsList />} />
+              <Route path="new" element={<NewPetition />} />
             </Route>
           </Route>
         </Route>

@@ -13,10 +13,10 @@ const NewUserForm = () => {
         useAddNewUserMutation();
 
     const navigate = useNavigate();
-    const options = Object.keys(PROGRAM).map((program) => {
+    const options = Object.keys(PROGRAM).map((program, i) => {
         return (
             <option key={program} value={program}>
-                {program}
+                {Object.values(PROGRAM)[i]}
             </option>
         );
     });
