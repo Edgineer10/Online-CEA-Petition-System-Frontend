@@ -10,7 +10,7 @@ import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
 
-const EditPetitionForm = ({ petition }) => {
+const EditPetitionForm = ({ petition, user }) => {
   const [updatePetition, { isLoading, isSuccess, isError, error }] =
     useUpdatePetitionMutation();
   const [
@@ -29,6 +29,8 @@ const EditPetitionForm = ({ petition }) => {
 
   const canSave = !isLoading;
 
+  const [join, setJoin] = useState(petition.petitionee.includes(user.id));
+
   const onSavePetitionClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
@@ -43,6 +45,7 @@ const EditPetitionForm = ({ petition }) => {
   const onDeletePetitionClicked = async () => {
     await deletePetition({ id: petition.id });
   };
+  const onJoinChanged = () => setJoin((prev) => !prev);
 
   const content = (
     <>
@@ -64,7 +67,20 @@ const EditPetitionForm = ({ petition }) => {
           </div>
         </div>
         <PetitionDetails petition={petition} />
-
+        <label
+          className="form__label form__checkbox-container"
+          htmlFor="user-active"
+        >
+          JOIN THIS PETITION:
+          <input
+            className="form__checkbox"
+            id="user-active"
+            name="user-active"
+            type="checkbox"
+            checked={join}
+            onChange={onJoinChanged}
+          />
+        </label>
         <label className="form__label">Petitionee/s: </label>
         <PetitioneeTable petitionee={petition.petitionee} />
       </form>
