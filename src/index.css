@@ -394,3 +394,13 @@ padding: 1rem;
 .dash-container{
   margin-left: 2em;
 }
+.join-button{
+  padding: .5rem;
+  background-color: rgb(56, 114, 56);
+  color: #FFF;
+}
+.unjoin-button{
+  padding: .5rem;
+  background-color: rgb(185, 67, 67);
+  color: #FFF;
+}

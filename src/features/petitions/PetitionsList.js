@@ -2,6 +2,12 @@ import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import Petition from "./Petition"
 
 const PetitionsList = () => {
+
+    const user = {
+        id: "6548391e52cf6fea690ce3f9",
+        courseProg: "BSCpE",
+    };
+
     const {
         data: petitions,
         isLoading,
@@ -25,7 +31,7 @@ const PetitionsList = () => {
     if (isSuccess) {
         const { ids } = petitions
         const tableContent = ids?.length
-            ? ids.map(petitionId => <Petition key={petitionId} petitionId={petitionId} />)
+            ? ids.map(petitionId => <Petition key={petitionId} petitionId={petitionId} user={user} />)
             : null
 
         content = (

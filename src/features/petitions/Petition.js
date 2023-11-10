@@ -5,13 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectPetitionById } from "./petitionsApiSlice";
 
-const Petition = ({ petitionId }) => {
+const Petition = ({ petitionId, user }) => {
   const petition = useSelector((state) =>
     selectPetitionById(state, petitionId)
   );
   const navigate = useNavigate();
 
+
   if (petition) {
+    const joined = petition.petitionee.includes(user.id) ? <span className="note__status--completed">Joined</span>
+      : null
     const handleView = () => navigate(`/dash/petitions/${petitionId}`);
 
     return (
@@ -21,7 +24,8 @@ const Petition = ({ petitionId }) => {
         <td className={`table__cell `}>{petition.descTitle}</td>
         <td className={`table__cell `}>{petition.unit}</td>
         <td className={`table__cell `}>{petition.schedule}</td>
-        <td className={`table__cell `}>{petition.petitionee.length}</td>
+        <td className={`table__cell `}>{petition.petitionee.length} <br /> {joined}
+        </td>
         <td className={`table__cell `}>
           <button className="icon-button table__button" onClick={handleView}>
             <FontAwesomeIcon icon={faEye} />

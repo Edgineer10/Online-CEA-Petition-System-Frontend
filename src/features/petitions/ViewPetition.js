@@ -6,7 +6,7 @@ import ViewPetiionForm from "./ViewPetitionForm";
 const ViewPetiion = () => {
   const { id } = useParams();
   const user = {
-    id: "6541afcbe5106beb14681501",
+    id: "6548391e52cf6fea690ce3f9",
     courseProg: "BSCpE",
   };
   const petition = useSelector((state) => selectPetitionById(state, id));

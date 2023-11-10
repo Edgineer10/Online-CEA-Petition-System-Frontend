@@ -4,7 +4,6 @@ import {
   useDeletePetitionMutation,
 } from "./petitionsApiSlice";
 import { useNavigate } from "react-router-dom";
-import User from "../users/User";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import PetitionDetails from "./PetitionDetails";
@@ -19,13 +18,16 @@ const EditPetitionForm = ({ petition, user }) => {
   ] = useDeletePetitionMutation();
 
   const navigate = useNavigate();
-  const [petitionee, setPetitionee] = useState(petition.petitionee);
 
   useEffect(() => {
-    if (isSuccess || isDelSuccess) {
-      navigate("/dash/petitions");
+    if (isSuccess) {
+      navigate(`/dash/petitions/${petition.id}`);
+    }
+    if (isDelSuccess) {
+      navigate(`/dash/petitions/`);
     }
   }, [isSuccess, isDelSuccess, navigate]);
+
 
   const canSave = !isLoading;
 
@@ -34,21 +36,47 @@ const EditPetitionForm = ({ petition, user }) => {
   const onSavePetitionClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      await updatePetition({
-        id: petition.id,
-        course: petition.course,
-        petitionee,
-      });
+      if (!join) {
+        await updatePetition({
+          id: petition.id,
+          course: petition.course,
+          schedule: petition.schedule,
+          petitionee: [...petition.petitionee, user.id],
+        })
+        onJoinChanged();
+      } else {
+        if (petition.petitionee.length === 1) {
+          const con = window.confirm("You are the last student in this petition, the petition will be deleted if you wish to continue")
+          if (con) onDeletePetitionClicked()
+        } else {
+          await updatePetition({
+            id: petition.id,
+            course: petition.course,
+            schedule: petition.schedule,
+            petitionee: petition.petitionee.filter((userr) => {
+              return userr !== user.id
+            })
+          })
+        }
+        onJoinChanged();
+      }
+
     }
   };
 
   const onDeletePetitionClicked = async () => {
     await deletePetition({ id: petition.id });
   };
-  const onJoinChanged = () => setJoin((prev) => !prev);
+  const onJoinChanged = () => {
+    setJoin((prev) => !prev)
+
+  };
+  const errClass = isError || isDelError ? "errmsg" : "offscreen";
+  const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
   const content = (
     <>
+      <p className={errClass}>{errContent}</p>
       <form className="form" onSubmit={onSavePetitionClicked}>
         <div className="form__title-row">
           <h2>Petition Details</h2>
@@ -72,16 +100,15 @@ const EditPetitionForm = ({ petition, user }) => {
           htmlFor="user-active"
         >
           JOIN THIS PETITION:
-          <input
-            className="form__checkbox"
+          <button
             id="user-active"
             name="user-active"
-            type="checkbox"
-            checked={join}
-            onChange={onJoinChanged}
-          />
+            type="button"
+            className={join ? "unjoin-button" : "join-button"}
+            onClick={onSavePetitionClicked}
+          >{join ? " Unjoin " : " Join "}</button>
         </label>
-        <label className="form__label">Petitionee/s: </label>
+        <label className="form__label">Petitionee/s: <b>{petition.petitionee.length}</b></label>
         <PetitioneeTable petitionee={petition.petitionee} />
       </form>
     </>
