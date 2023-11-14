@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
+import { ROLE } from "../../config/role";
+
 
 const EditUserForm = ({ user }) => {
   const [updateUser, { isLoading, isSuccess, isError, error }] =
@@ -17,6 +19,7 @@ const EditUserForm = ({ user }) => {
   const navigate = useNavigate();
 
   const [password, setPassword] = useState(user.password);
+  const [role, setRole] = useState(user.role);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [middleName, setMiddleName] = useState(user.middleName);
@@ -29,6 +32,7 @@ const EditUserForm = ({ user }) => {
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
       setPassword("");
+      setRole("");
       setFirstName("");
       setLastName("");
       setMiddleName("");
@@ -40,6 +44,7 @@ const EditUserForm = ({ user }) => {
   }, [isSuccess, isDelSuccess, navigate]);
 
   const onPasswordChanged = (e) => setPassword(e.target.value);
+  const onRoleChanged = (e) => setRole(e.target.value);
   const onFirstNameChanged = (e) => setFirstName(e.target.value);
   const onLastNameChanged = (e) => setLastName(e.target.value);
   const onMiddleNameChanged = (e) => setMiddleName(e.target.value);
@@ -53,6 +58,7 @@ const EditUserForm = ({ user }) => {
 
   const canSave =
     [
+      role ||
       firstName ||
       lastName ||
       middleName ||
@@ -68,6 +74,7 @@ const EditUserForm = ({ user }) => {
         await updateUser({
           id: user.id,
           password,
+          role,
           firstName,
           lastName,
           middleName,
@@ -79,6 +86,7 @@ const EditUserForm = ({ user }) => {
       } else {
         await updateUser({
           id: user.id,
+          role,
           firstName,
           lastName,
           middleName,
@@ -101,9 +109,17 @@ const EditUserForm = ({ user }) => {
       </option>
     );
   });
+  const roleoptions = Object.keys(ROLE).map((role, i) => {
+    return (
+      <option key={role} value={role}>
+        {Object.values(ROLE)[i]}
+      </option>
+    );
+  });
 
   const errClass = isError || isDelError ? "errmsg" : "offscreen";
   const validPasswordClass = !password ? "form__input--incomplete" : "";
+  const validRoleClass = !role ? "form__input--incomplete" : "";
   const validFirstNameClass = !firstName ? "form__input--incomplete" : "";
   const validLastNameClass = !lastName ? "form__input--incomplete" : "";
   const validMiddleNameClass = !middleName ? "form__input--incomplete" : "";
@@ -135,6 +151,20 @@ const EditUserForm = ({ user }) => {
           </div>
         </div>
 
+        <label className="form__label" htmlFor="role">
+          Role:
+        </label>
+        <select
+          id="role"
+          name="role"
+          className={`form__select ${validRoleClass}`}
+          multiple={false}
+          size="1"
+          value={role}
+          onChange={onRoleChanged}
+        >
+          {roleoptions}
+        </select>
         <label className="form__label" htmlFor="password">
           Password:{" "}
         </label>

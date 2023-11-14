@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
+import { ROLE } from "../../config/role";
 
-const USER_REGEX = /^[A-z]{3,20}$/;
-const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 
 const NewUserForm = () => {
     const [addNewUser, { isLoading, isSuccess, isError, error }] =
@@ -20,10 +19,18 @@ const NewUserForm = () => {
             </option>
         );
     });
+    const roleoptions = Object.keys(ROLE).map((role, i) => {
+        return (
+            <option key={role} value={role}>
+                {Object.values(ROLE)[i]}
+            </option>
+        );
+    });
 
 
     const [idNumber, setIdNumber] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState(roleoptions[0].value);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [middleName, setMiddleName] = useState("");
@@ -35,6 +42,7 @@ const NewUserForm = () => {
         if (isSuccess) {
             setIdNumber("");
             setPassword("");
+            setRole("");
             setFirstName("");
             setLastName("");
             setMiddleName("");
@@ -47,6 +55,7 @@ const NewUserForm = () => {
 
     const onIdNumberChanged = (e) => setIdNumber(e.target.value);
     const onPasswordChanged = (e) => setPassword(e.target.value);
+    const onRoleChanged = (e) => setRole(e.target.value);
     const onFirstNameChanged = (e) => setFirstName(e.target.value);
     const onLastNameChanged = (e) => setLastName(e.target.value);
     const onMiddleNameChanged = (e) => setMiddleName(e.target.value);
@@ -61,6 +70,7 @@ const NewUserForm = () => {
         [
             idNumber ||
             password ||
+            role ||
             firstName ||
             lastName ||
             middleName ||
@@ -75,6 +85,7 @@ const NewUserForm = () => {
             await addNewUser({
                 idNumber,
                 password,
+                role,
                 firstName,
                 lastName,
                 middleName,
@@ -89,6 +100,7 @@ const NewUserForm = () => {
     const errClass = isError ? "errmsg" : "offscreen";
     const validNumberClass = !idNumber ? "form__input--incomplete" : "";
     const validPasswordClass = !password ? "form__input--incomplete" : "";
+    const validRoleClass = !role ? "form__input--incomplete" : "";
     const validFirstNameClass = !firstName ? "form__input--incomplete" : "";
     const validLastNameClass = !lastName ? "form__input--incomplete" : "";
     const validMiddleNameClass = !middleName ? "form__input--incomplete" : "";
@@ -133,6 +145,20 @@ const NewUserForm = () => {
                     value={password}
                     onChange={onPasswordChanged}
                 />
+                <label className="form__label" htmlFor="role">
+                    Role:
+                </label>
+                <select
+                    id="role"
+                    name="role"
+                    className={`form__select ${validRoleClass}`}
+                    multiple={false}
+                    size="1"
+                    value={role}
+                    onChange={onRoleChanged}
+                >
+                    {roleoptions}
+                </select>
                 <label className="form__label" htmlFor="firstname">
                     First Name: <span className="nowrap">[3-20 letters]</span>
                 </label>
@@ -196,7 +222,7 @@ const NewUserForm = () => {
                 />
 
                 <label className="form__label" htmlFor="program">
-                    Course Program:
+                    Course Program / Department:
                 </label>
                 <select
                     id="program"

@@ -6,7 +6,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 
 
-const NewCourseForm = () => {
+const NewCourse = () => {
     const [addNewCourse, { isLoading, isSuccess, isError, error }] =
         useAddNewCourseMutation();
 
@@ -199,4 +199,4 @@ const NewCourseForm = () => {
 
     return content;
 };
-export default NewCourseForm;
+export default NewCourse;

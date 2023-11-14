@@ -14,36 +14,39 @@ import Prefetch from "./features/auth/Prefetch.js";
 import NewPetition from "./features/petitions/NewPetition.js";
 import PetitionsList from "./features/petitions/PetitionsList.js";
 import ViewPetiion from "./features/petitions/ViewPetition.js";
+import PersistLogin from "./features/auth/PersistLogin.js";
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
-        <Route element={<Prefetch />}>
-          <Route path="dash" element={<DashLayout />}>
-            <Route index element={<Welcome />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<Prefetch />}>
+            <Route path="dash" element={<DashLayout />}>
+              <Route index element={<Welcome />} />
 
-            <Route path="users">
-              <Route index element={<UsersList />} />
-              <Route path=":id" element={<EditUser />} />
-              <Route path="new" element={<NewUserForm />} />
-            </Route>
+              <Route path="users">
+                <Route index element={<UsersList />} />
+                <Route path=":id" element={<EditUser />} />
+                <Route path="new" element={<NewUserForm />} />
+              </Route>
 
-            <Route path="courses">
-              <Route index element={<CoursesList />} />
-              <Route path=":id" element={<EditCourse />} />
-              <Route path="new" element={<NewCourse />} />
-            </Route>
+              <Route path="courses">
+                <Route index element={<CoursesList />} />
+                <Route path=":id" element={<EditCourse />} />
+                <Route path="new" element={<NewCourse />} />
+              </Route>
 
-            <Route path="petitions">
-              <Route index element={<PetitionsList />} />
-              <Route path="new" element={<NewPetition />} />
-              <Route path=":id" element={<ViewPetiion />} />
+              <Route path="petitions">
+                <Route index element={<PetitionsList />} />
+                <Route path="new" element={<NewPetition />} />
+                <Route path=":id" element={<ViewPetiion />} />
+              </Route>
             </Route>
           </Route>
+          {/* End Dash */}
         </Route>
-        {/* End Dash */}
       </Route>
     </Routes>
   );
