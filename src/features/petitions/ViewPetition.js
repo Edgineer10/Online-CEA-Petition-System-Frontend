@@ -1,21 +1,34 @@
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectPetitionById } from "./petitionsApiSlice";
-import ViewPetiionForm from "./ViewPetitionForm";
+import { useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { selectPetitionById } from "./petitionsApiSlice"
+import ViewPetiionForm from "./ViewPetitionForm"
+import ViewPetiionFormAd from "./ViewPetitionFormAd"
+import useAuth from "../../hooks/useAuth"
 
 const ViewPetiion = () => {
-  const { id } = useParams();
-  const user = {
-    id: "6548391e52cf6fea690ce3f9",
-    courseProg: "BSCpE",
-  };
-  const petition = useSelector((state) => selectPetitionById(state, id));
+  const { petid } = useParams();
 
-  const content = petition ? (
-    <ViewPetiionForm petition={petition} user={user} />
-  ) : (
-    <p>Loading...</p>
-  );
+  const { id, courseProg, role } = useAuth();
+  const user = {
+    id: id,
+    courseProg: courseProg,
+    role: role
+  };
+  let content = null
+  const petition = useSelector((state) => selectPetitionById(state, petid));
+  if (user.role === "Student") {
+    content = petition ? (
+      <ViewPetiionForm petition={petition} user={user} />
+    ) : (
+      <p>Loading...</p>
+    );
+  } else {
+    content = petition ? (
+      <ViewPetiionFormAd petition={petition} user={user} />
+    ) : (
+      <p>Loading...</p>
+    )
+  }
 
   return content;
 };

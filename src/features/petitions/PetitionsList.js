@@ -1,12 +1,15 @@
 import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import Petition from "./Petition"
-
+import useAuth from "../../hooks/useAuth";
 const PetitionsList = () => {
 
+    const { id, courseProg, role } = useAuth();
     const user = {
-        id: "6548391e52cf6fea690ce3f9",
-        courseProg: "BSCpE",
+        id: id,
+        courseProg: courseProg,
+        role: role
     };
+
 
     const {
         data: petitions,
@@ -19,7 +22,6 @@ const PetitionsList = () => {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
-
     let content
 
     if (isLoading) content = <p>Loading...</p>

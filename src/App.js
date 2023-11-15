@@ -15,6 +15,7 @@ import NewPetition from "./features/petitions/NewPetition.js";
 import PetitionsList from "./features/petitions/PetitionsList.js";
 import ViewPetiion from "./features/petitions/ViewPetition.js";
 import PersistLogin from "./features/auth/PersistLogin.js";
+import ViewPetiionAd from "./features/petitions/ViewPetition.js";
 function App() {
   return (
     <Routes>
@@ -41,7 +42,8 @@ function App() {
               <Route path="petitions">
                 <Route index element={<PetitionsList />} />
                 <Route path="new" element={<NewPetition />} />
-                <Route path=":id" element={<ViewPetiion />} />
+                <Route path="edit/:petid" element={<ViewPetiionAd />} />
+                <Route path=":petid" element={<ViewPetiion />} />
               </Route>
             </Route>
           </Route>

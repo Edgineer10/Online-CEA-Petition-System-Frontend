@@ -214,6 +214,11 @@ tr {
   grid-template-columns: 2fr 4fr 2fr  ;
 }
 
+.table--petitionee--add{
+  
+  grid-template-columns: 2fr 4fr 2fr 1fr  ;
+}
+
 
 .table__button {
   padding: 0.25em;

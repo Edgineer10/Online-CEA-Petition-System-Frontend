@@ -4,8 +4,6 @@ import {
   useDeletePetitionMutation,
 } from "./petitionsApiSlice";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
 
@@ -20,12 +18,10 @@ const EditPetitionForm = ({ petition, user }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate(`/dash/petitions/${petition.id}`);
-    }
-    if (isDelSuccess) {
+    if (isSuccess || isDelSuccess) {
       navigate(`/dash/petitions/`);
     }
+
   }, [isSuccess, isDelSuccess, navigate]);
 
 
@@ -64,7 +60,8 @@ const EditPetitionForm = ({ petition, user }) => {
     }
   };
 
-  const onDeletePetitionClicked = async () => {
+  const onDeletePetitionClicked = async (e) => {
+    e.preventDefault();
     await deletePetition({ id: petition.id });
   };
   const onJoinChanged = () => {
@@ -77,25 +74,15 @@ const EditPetitionForm = ({ petition, user }) => {
   const content = (
     <>
       <p className={errClass}>{errContent}</p>
-      <form className="form" onSubmit={onSavePetitionClicked}>
+      <form className="form" >
         <div className="form__title-row">
           <h2>Petition Details</h2>
           <div className="form__action-buttons">
-            <button className="icon-button" title="Save" disabled={!canSave}>
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-
-            <button
-              className="icon-button"
-              title="Delete"
-              onClick={onDeletePetitionClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
           </div>
         </div>
         <PetitionDetails petition={petition} />
-        <label
+
+        {user.role === "Student" && <label
           className="form__label form__checkbox-container"
           htmlFor="user-active"
         >
@@ -107,7 +94,8 @@ const EditPetitionForm = ({ petition, user }) => {
             className={join ? "unjoin-button" : "join-button"}
             onClick={onSavePetitionClicked}
           >{join ? " Unjoin " : " Join "}</button>
-        </label>
+        </label>}
+
         <label className="form__label">Petitionee/s: <b>{petition.petitionee.length}</b></label>
         <PetitioneeTable petitionee={petition.petitionee} />
       </form>
