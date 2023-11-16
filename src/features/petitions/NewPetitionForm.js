@@ -40,13 +40,13 @@ const NewCourseForm = ({ courses, user }) => {
     const onScheduleChanged = (e) => setSchedule(e.target.value);
     const canSave =
         [
-            course ||
+            course.length ||
             schedule
         ].every(Boolean) && !isLoading;
 
     const onSavePetitionClicked = async (e) => {
         e.preventDefault();
-        console.log(course + " " + petitionee + " " + schedule)
+        console.log(course + " " + schedule)
         if (canSave) {
             await addNewPetition({
                 course,

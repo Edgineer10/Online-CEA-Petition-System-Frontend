@@ -11,24 +11,16 @@ const Public = () => {
       </header>
       <main className="public__main">
         <p>
-          Located in Beautiful Downtown Foo City, Dan D. Repairs provides a
-          trained staff ready to meet your tech repair needs.
+          Thank you for visiting the Online Subject Petition System. This system is designed to make it easy for students to petition for changes to their subject schedules.
         </p>
         <address className="public__addr">
-          Dan D. Repairs
-          <br />
-          555 Foo Drive
-          <br />
-          Foo City, CA 12345
-          <br />
-          <a href="tel:+15555555555">(555) 555-5555</a>
+          To get started, please log in to your existing account. Once you are logged in, you will be able to submit a new petition, view the status of your existing petitions, and track the progress of your petitions.
         </address>
         <br />
-        <p>Owner: Dan Davidson</p>
+        <p>Dev: ELJ</p>
       </main>
       <footer>
-        <Link to="/login">Student Login</Link> <span> | </span>
-        <Link to="/emplogin">Employee Login</Link>
+        <Link to="/login">Student Login</Link>
       </footer>
     </section>
   );

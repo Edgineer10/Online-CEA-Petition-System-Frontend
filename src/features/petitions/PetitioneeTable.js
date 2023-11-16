@@ -1,8 +1,8 @@
 import React from "react";
 import Petitionee from "./Petitionee";
-const PetitioneeTable = ({ petitionee, user }) => {
+const PetitioneeTable = ({ petitionee, user, onDeleteStudent }) => {
   const tableContent = petitionee?.length
-    ? petitionee.map((userId) => <Petitionee key={userId} userId={userId} user={user} />)
+    ? petitionee.map((userId) => <Petitionee key={userId} userId={userId} user={user} onDeleteStudent={onDeleteStudent} />)
     : null;
 
 
@@ -43,7 +43,6 @@ const PetitioneeTable = ({ petitionee, user }) => {
             <th scope="col" className="table__th user__roles">
               Course & Year
             </th>
-            { }
           </tr>
         </thead>
         <tbody>{tableContent}</tbody>

@@ -10,6 +10,7 @@ import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersApiSlice";
+import Usermatch from "./Usermatch";
 
 const EditPetitionFormAd = ({ petition, user }) => {
     const [updatePetition, { isLoading, isSuccess, isError, error }] =
@@ -35,8 +36,12 @@ const EditPetitionFormAd = ({ petition, user }) => {
     const [idNumber, setIdNumber] = useState("");
     const users = useSelector(selectAllUsers);
     const aduser = users ? users.find(user => { return user.idNumber === idNumber }) : null;
-
-    if (aduser) console.log(aduser)
+    let usermatch = null;
+    const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
+    if (idNumber.length >= 2 && choices) {
+        console.log(choices)
+        usermatch = <Usermatch choices={choices} />
+    }
 
     const onDeletePetitionClicked = async (e) => {
         e.preventDefault()
@@ -49,7 +54,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
         e.preventDefault();
         if (!isLoading && users) {
-            if (aduser && !petition.petitionee.includes(aduser.id)) {
+            if (aduser && !petition.petitionee.includes(aduser.id) && aduser.role === "Student") {
                 await updatePetition({
                     id: petition.id,
                     course: petition.course,
@@ -61,14 +66,32 @@ const EditPetitionFormAd = ({ petition, user }) => {
             }
         }
     };
-    const onIdNumberChanged = (e) => setIdNumber(e.target.value);
+
+    const onDeleteStudent = async (id) => {
+        if (petition.petitionee.length === 1) {
+            window.alert("Warning: You are removing the last student of this petition. Removing the last student means the petition will also have to be deleted. If you wish to do so, proceed deleting the petition by pressing the DELETE button.")
+        } else {
+            await updatePetition({
+                id: petition.id,
+                course: petition.course,
+                schedule: petition.schedule,
+                petitionee: petition.petitionee.filter((userr) => {
+                    return userr !== id
+                })
+            })
+        }
+    }
+    const onIdNumberChanged = (e) => {
+        setIdNumber(e.target.value)
+
+    };
     const errClass = isError || isDelError ? "errmsg" : "offscreen";
     const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
     const content = (
         <>
             <p className={errClass}>{errContent}</p>
-            <form className="form">
+            <form className="form" onSubmit={onIdNumberChanged}>
                 <div className="form__title-row">
                     <h2>Petition Details</h2>
                     <div className="form__action-buttons">
@@ -107,9 +130,10 @@ const EditPetitionFormAd = ({ petition, user }) => {
                         onClick={onAddPetitioneeClicked}
                     >ADD</button>
                 </label>}
+                {usermatch}
 
                 <label className="form__label">Petitionee/s: <b>{petition.petitionee.length}</b></label>
-                <PetitioneeTable petitionee={petition.petitionee} user={user} />
+                <PetitioneeTable petitionee={petition.petitionee} user={user} onDeleteStudent={onDeleteStudent} />
             </form>
         </>
     );
