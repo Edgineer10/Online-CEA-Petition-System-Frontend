@@ -10,19 +10,16 @@ const NewCourseForm = ({ courses, user }) => {
     const [addNewPetition, { isLoading, isSuccess, isError, error }] =
         useAddNewPetitionMutation();
     const navigate = useNavigate();
-    const options = courses.map((course) => {
-        if (Object.values(course.courseProg).includes(user.courseProg))
-            return (
-                <option key={course.id} value={course.id}>
-                    {course.courseCode + " - " + course.descTitle}
-                </option>
-            )
-        else return null;
+    const fcourse = courses.filter(course => { return course.courseProg.includes(user.courseProg) })
+    const options = fcourse.map((course) => {
+        return (
+            <option key={course.id} value={course.id}>
+                {course.courseCode + " - " + course.descTitle}
+            </option>
+        )
     });
 
-
-
-    const [course, setCourse] = useState("");
+    const [course, setCourse] = useState(fcourse[0].id);
     const [petitionee, setPetitionee] = useState([user.id]);
     const [schedule, setSchedule] = useState("");
 
@@ -40,13 +37,13 @@ const NewCourseForm = ({ courses, user }) => {
     const onScheduleChanged = (e) => setSchedule(e.target.value);
     const canSave =
         [
-            course.length ||
+            course &&
             schedule
         ].every(Boolean) && !isLoading;
 
     const onSavePetitionClicked = async (e) => {
         e.preventDefault();
-        console.log(course + " " + schedule)
+        console.log(course.length)
         if (canSave) {
             await addNewPetition({
                 course,
@@ -81,10 +78,9 @@ const NewCourseForm = ({ courses, user }) => {
                     id="course"
                     name="course"
                     className={`form__select ${validCourseClass}`}
-                    multiple={false}
-                    size="1"
                     value={course}
                     onChange={onCourseChanged}
+
                 >
                     {options}
                 </select>

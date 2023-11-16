@@ -30,13 +30,13 @@ const NewUserForm = () => {
 
     const [idNumber, setIdNumber] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState(roleoptions[0].value);
+    const [role, setRole] = useState("Student");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [middleName, setMiddleName] = useState("");
     const [birthday, setBirthday] = useState("");
     const [year, setYear] = useState(1);
-    const [courseProg, setCourseProg] = useState(options[0].value);
+    const [courseProg, setCourseProg] = useState("BSCE");
 
     useEffect(() => {
         if (isSuccess) {

@@ -83,7 +83,6 @@ const EditPetitionFormAd = ({ petition, user }) => {
     }
     const onIdNumberChanged = (e) => {
         setIdNumber(e.target.value)
-
     };
     const errClass = isError || isDelError ? "errmsg" : "offscreen";
     const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
@@ -91,7 +90,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
     const content = (
         <>
             <p className={errClass}>{errContent}</p>
-            <form className="form" onSubmit={onIdNumberChanged}>
+            <div className="form">
                 <div className="form__title-row">
                     <h2>Petition Details</h2>
                     <div className="form__action-buttons">
@@ -125,7 +124,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
                     <button
                         id="user-active"
                         name="user-active"
-                        type="button"
+                        type="submit"
                         className="join-button"
                         onClick={onAddPetitioneeClicked}
                     >ADD</button>
@@ -134,7 +133,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
                 <label className="form__label">Petitionee/s: <b>{petition.petitionee.length}</b></label>
                 <PetitioneeTable petitionee={petition.petitionee} user={user} onDeleteStudent={onDeleteStudent} />
-            </form>
+            </div>
         </>
     );
 

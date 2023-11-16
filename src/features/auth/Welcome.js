@@ -17,11 +17,12 @@ const Welcome = () => {
       <p>{today}</p>
 
       <h1>Welcome {name}!</h1>
-      {(isStudent) && <p><Link to="/dash/petitions">View Petitions</Link></p>}
+      {(isAdmin || isInstructor || isStudent) && <p><Link to="/dash/petitions">View Petitions</Link></p>}
       {(isStudent) && <p><Link to="/dash/petitions/new">Create Petition</Link></p>}
-      {(isAdmin) && <p><Link to="/dash/courses">View Courses</Link></p>}
-      {(isAdmin || isInstructor || isStudent) && <p><Link to="/dash/users">View/Edit Student Information</Link></p>}
-      {(isAdmin || isInstructor || isStudent) && <p><Link to="/dash/users/new">Add Admin/Instructor/Student</Link></p>}
+      {(isAdmin || isInstructor) && <p><Link to="/dash/courses">View Courses</Link></p>}
+      {(isAdmin || isInstructor) && <p><Link to="/dash/courses/new">Add Courses</Link></p>}
+      {(isAdmin || isInstructor) && <p><Link to="/dash/users">View/Edit Student Information</Link></p>}
+      {(isAdmin || isInstructor) && <p><Link to="/dash/users/new">Add Admin/Instructor/Student</Link></p>}
 
     </section>
   );

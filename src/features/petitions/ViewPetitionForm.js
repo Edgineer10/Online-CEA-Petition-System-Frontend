@@ -97,7 +97,7 @@ const EditPetitionForm = ({ petition, user }) => {
         </label>}
 
         <label className="form__label">Petitionee/s: <b>{petition.petitionee.length}</b></label>
-        <PetitioneeTable petitionee={petition.petitionee} />
+        <PetitioneeTable petitionee={petition.petitionee} user={user} />
       </form>
     </>
   );
