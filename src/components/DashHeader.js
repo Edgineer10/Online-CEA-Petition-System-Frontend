@@ -62,7 +62,7 @@ const DashHeader = () => {
   }
 
   let PetitionButton = null
-  if (!PETITIONS_REGEX.test(pathname) && pathname.includes('/dash')) {
+  if (!PETITIONS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash')) {
     console.log("Petition")
     PetitionButton = (
       <button
@@ -75,7 +75,7 @@ const DashHeader = () => {
     )
   }
   let UserButton = null
-  if (!USERS_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
+  if (!USERS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
     console.log("User")
     UserButton = (
       <button
@@ -88,7 +88,7 @@ const DashHeader = () => {
     )
   }
   let CourseButton = null
-  if (!COURSES_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
+  if (!COURSES_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
     console.log("Course")
     CourseButton = (
       <button
