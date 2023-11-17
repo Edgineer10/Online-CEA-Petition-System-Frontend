@@ -24,10 +24,14 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
     useEffect(() => {
         if (isSuccess) {
-            navigate('/dash/petitions/' + petition.id);
+            navigate();
+
         }
         if (isDelSuccess) {
             navigate(`/dash/petitions/`);
+        }
+        if (navigate) {
+            setIdNumber('')
         }
     }, [isSuccess, isDelSuccess, navigate]);
 
@@ -39,7 +43,6 @@ const EditPetitionFormAd = ({ petition, user }) => {
     let usermatch = null;
     const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
     if (idNumber.length >= 2 && choices) {
-        console.log(choices)
         usermatch = <Usermatch choices={choices} />
     }
 

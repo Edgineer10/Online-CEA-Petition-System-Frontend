@@ -31,8 +31,6 @@ const Petition = ({ petitionId, user }) => {
 
   }
   else if (petition && user.role === "Student" && petition.courseProg.includes(user.courseProg)) {
-    console.log(petition.petitionee);
-    console.log(user.id);
     const joined = petition.petitionee.includes(user.id) ? <span className="note__status--completed">Joined</span>
       : null
     const handleView = () => navigate(`/dash/petitions/${petitionId}`);

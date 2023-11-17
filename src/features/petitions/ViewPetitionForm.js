@@ -18,10 +18,12 @@ const EditPetitionForm = ({ petition, user }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSuccess || isDelSuccess) {
+    if (isSuccess) {
+      navigate();
+    }
+    if (isDelSuccess) {
       navigate(`/dash/petitions/`);
     }
-
   }, [isSuccess, isDelSuccess, navigate]);
 
 
@@ -43,7 +45,7 @@ const EditPetitionForm = ({ petition, user }) => {
       } else {
         if (petition.petitionee.length === 1) {
           const con = window.confirm("You are the last student in this petition, the petition will be deleted if you wish to continue")
-          if (con) onDeletePetitionClicked()
+          if (con) await deletePetition({ id: petition.id });
         } else {
           await updatePetition({
             id: petition.id,
@@ -53,16 +55,12 @@ const EditPetitionForm = ({ petition, user }) => {
               return userr !== user.id
             })
           })
+
+          onJoinChanged();
         }
-        onJoinChanged();
       }
 
     }
-  };
-
-  const onDeletePetitionClicked = async (e) => {
-    e.preventDefault();
-    await deletePetition({ id: petition.id });
   };
   const onJoinChanged = () => {
     setJoin((prev) => !prev)

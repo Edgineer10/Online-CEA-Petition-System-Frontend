@@ -4,7 +4,7 @@ import Public from "./components/Public";
 import Login from "./features/auth/Login";
 import DashLayout from "./components/DashLayout.js";
 import Welcome from "./features/auth/Welcome";
-import CoursesList from "./features/courses/CoursesList";
+//import CoursesList from "./features/courses/CoursesList";
 import UsersList from "./features/users/UsersList";
 import EditUser from "./features/users/EditUser";
 import NewUserForm from "./features/users/NewUserForm";
@@ -16,6 +16,7 @@ import PetitionsList from "./features/petitions/PetitionsList.js";
 import ViewPetiion from "./features/petitions/ViewPetition.js";
 import PersistLogin from "./features/auth/PersistLogin.js";
 import ViewPetiionAd from "./features/petitions/ViewPetition.js";
+import SearchableCourseList from "./features/courses/SearchableCourseList.js";
 function App() {
   return (
     <Routes>
@@ -34,7 +35,7 @@ function App() {
               </Route>
 
               <Route path="courses">
-                <Route index element={<CoursesList />} />
+                <Route index element={<SearchableCourseList />} />
                 <Route path=":id" element={<EditCourse />} />
                 <Route path="new" element={<NewCourse />} />
               </Route>
