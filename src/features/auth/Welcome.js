@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 const Welcome = () => {
-  const { name, idNumber, role } = useAuth();
+  const { name, role } = useAuth();
   const isStudent = role === "Student" ? true : false;
   const isAdmin = role === "Admin" ? true : false;
   const isInstructor = role === "Instructor" ? true : false;
@@ -20,7 +20,7 @@ const Welcome = () => {
       {(isAdmin || isInstructor || isStudent) && <p><Link to="/dash/petitions">View Petitions</Link></p>}
       {(isStudent) && <p><Link to="/dash/petitions/new">Create Petition</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/courses">View Courses</Link></p>}
-      {(isAdmin || isInstructor) && <p><Link to="/dash/courses/new">Add Courses</Link></p>}
+      {(isAdmin || isInstructor) && <p><Link to="/dash/courses/new">Add Course</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/users">View/Edit Student Information</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/users/new">Add Admin/Instructor/Student</Link></p>}
 

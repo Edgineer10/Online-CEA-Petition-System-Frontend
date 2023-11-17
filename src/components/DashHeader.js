@@ -9,10 +9,12 @@ import { useNavigate, Link, useLocation } from 'react-router-dom'
 
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
+import User from '../features/users/User'
 
 const DASH_REGEX = /^\/dash(\/)?$/
 const PETITIONS_REGEX = /^\/dash\/petitions(\/)?$/
 const USERS_REGEX = /^\/dash\/users(\/)?$/
+const COURSES_REGEX = /^\/dash\/courses(\/)?$/
 
 const DashHeader = () => {
   const { role } = useAuth()
@@ -33,6 +35,8 @@ const DashHeader = () => {
 
   const onNewPetitionClicked = () => navigate('/dash/petitions/new')
   const onPetitionsClicked = () => navigate('/dash/petitions/')
+  const onUsersClicked = () => navigate('/dash/users/')
+  const onCoursesClicked = () => navigate('/dash/courses/')
 
 
   if (isLoading) return <p>Logging Out...</p>
@@ -40,7 +44,7 @@ const DashHeader = () => {
   if (isError) return <p>Error: {error.data?.message}</p>
 
   let dashClass = null
-  if (!DASH_REGEX.test(pathname) && !PETITIONS_REGEX.test(pathname) && !USERS_REGEX.test(pathname)) {
+  if (!DASH_REGEX.test(pathname) && !PETITIONS_REGEX.test(pathname)) {
     dashClass = "dash-header__container--small"
   }
 
@@ -58,14 +62,41 @@ const DashHeader = () => {
   }
 
   let PetitionButton = null
-  if (!PETITIONS_REGEX.test(pathname) && pathname.includes('/dash') && !DASH_REGEX.test(pathname) && role === "Student") {
+  if (!PETITIONS_REGEX.test(pathname) && pathname.includes('/dash')) {
+    console.log("Petition")
     PetitionButton = (
       <button
-        className="icon-button"
+        className="naviBut"
         title="Petitions"
         onClick={onPetitionsClicked}
       >
-        <FontAwesomeIcon icon={faList} />
+        Petitions List
+      </button>
+    )
+  }
+  let UserButton = null
+  if (!USERS_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
+    console.log("User")
+    UserButton = (
+      <button
+        className="naviBut"
+        title="Users"
+        onClick={onUsersClicked}
+      >
+        Users List
+      </button>
+    )
+  }
+  let CourseButton = null
+  if (!COURSES_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
+    console.log("Course")
+    CourseButton = (
+      <button
+        className="naviBut"
+        title="Courses"
+        onClick={onCoursesClicked}
+      >
+        Courses List
       </button>
     )
   }
@@ -88,6 +119,8 @@ const DashHeader = () => {
       <>
         {newPetitionButton}
         {PetitionButton}
+        {UserButton}
+        {CourseButton}
         {logoutButton}
       </>
     )

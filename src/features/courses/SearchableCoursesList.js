@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectAllCourses } from "./coursesApiSlice";
 import { useState } from "react";
 
-const SearchableCourseList = () => {
+const SearchableCoursesList = () => {
     const courses = useSelector(selectAllCourses);
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
@@ -72,4 +72,4 @@ const SearchableCourseList = () => {
 
     return content
 }
-export default SearchableCourseList
+export default SearchableCoursesList
