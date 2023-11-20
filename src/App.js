@@ -12,12 +12,14 @@ import EditCourse from "./features/courses/EditCourse";
 import NewCourse from "./features/courses/NewCourse";
 import Prefetch from "./features/auth/Prefetch.js";
 import NewPetition from "./features/petitions/NewPetition.js";
-import PetitionsList from "./features/petitions/PetitionsList.js";
+//import PetitionsList from "./features/petitions/PetitionsList.js";
 import ViewPetiion from "./features/petitions/ViewPetition.js";
 import PersistLogin from "./features/auth/PersistLogin.js";
 import ViewPetiionAd from "./features/petitions/ViewPetition.js";
 import SearchableCoursesList from "./features/courses/SearchableCoursesList.js";
 import SearchableUsersList from "./features/users/SearchableUsersList.js";
+import EditPasword from './features/users/EditPassword.js'
+import SearchablePetitionsList from "./features/petitions/SearchablePetitionsList.js";
 function App() {
   return (
     <Routes>
@@ -29,6 +31,9 @@ function App() {
             <Route path="dash" element={<DashLayout />}>
               <Route index element={<Welcome />} />
 
+              <Route path="user">
+                <Route index element={<EditPasword />} />
+              </Route>
               <Route path="users">
                 <Route index element={<SearchableUsersList />} />
                 <Route path=":id" element={<EditUser />} />
@@ -42,7 +47,7 @@ function App() {
               </Route>
 
               <Route path="petitions">
-                <Route index element={<PetitionsList />} />
+                <Route index element={<SearchablePetitionsList />} />
                 <Route path="new" element={<NewPetition />} />
                 <Route path="edit/:petid" element={<ViewPetiionAd />} />
                 <Route path=":petid" element={<ViewPetiion />} />

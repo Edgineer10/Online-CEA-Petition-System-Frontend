@@ -21,8 +21,9 @@ const Welcome = () => {
       {(isStudent) && <p><Link to="/dash/petitions/new">Create Petition</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/courses">View Courses</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/courses/new">Add Course</Link></p>}
-      {(isAdmin || isInstructor) && <p><Link to="/dash/users">View/Edit Student Information</Link></p>}
+      {(isAdmin || isInstructor) && <p><Link to="/dash/users">View Student/Instructor Information</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/users/new">Add Admin/Instructor/Student</Link></p>}
+      {<p><Link to="/dash/user">Edit Password</Link></p>}
 
     </section>
   );

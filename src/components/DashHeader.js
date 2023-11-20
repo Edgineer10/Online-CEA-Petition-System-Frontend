@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faFileCirclePlus,
   faList,
-  faRightFromBracket
+  faRightFromBracket,
+  faIdCard,
+  faFile
 } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
-import User from '../features/users/User'
 
 const DASH_REGEX = /^\/dash(\/)?$/
 const PETITIONS_REGEX = /^\/dash\/petitions(\/)?$/
@@ -33,12 +34,6 @@ const DashHeader = () => {
     if (isSuccess) navigate('/')
   }, [isSuccess, navigate])
 
-  const onNewPetitionClicked = () => navigate('/dash/petitions/new')
-  const onPetitionsClicked = () => navigate('/dash/petitions/')
-  const onUsersClicked = () => navigate('/dash/users/')
-  const onCoursesClicked = () => navigate('/dash/courses/')
-
-
   if (isLoading) return <p>Logging Out...</p>
 
   if (isError) return <p>Error: {error.data?.message}</p>
@@ -51,53 +46,36 @@ const DashHeader = () => {
   let newPetitionButton = null
   if (PETITIONS_REGEX.test(pathname) && role === "Student") {
     newPetitionButton = (
-      <button
-        className="icon-button"
-        title="New Note"
-        onClick={onNewPetitionClicked}
-      >
-        <FontAwesomeIcon icon={faFileCirclePlus} />
-      </button>
+
+      <Link className="naviBut" to="/dash/petitions/new"><FontAwesomeIcon icon={faFileCirclePlus} /> Add Petition</Link>
+
     )
   }
+
+
 
   let PetitionButton = null
   if (!PETITIONS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash')) {
     console.log("Petition")
     PetitionButton = (
-      <button
-        className="naviBut"
-        title="Petitions"
-        onClick={onPetitionsClicked}
-      >
-        Petitions List
-      </button>
+
+      <Link className="naviBut" to="/dash/petitions"><FontAwesomeIcon icon={faFile} /> View Petitions</Link>
     )
   }
   let UserButton = null
   if (!USERS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
     console.log("User")
     UserButton = (
-      <button
-        className="naviBut"
-        title="Users"
-        onClick={onUsersClicked}
-      >
-        Users List
-      </button>
+      <Link className="naviBut" to="/dash/users"><FontAwesomeIcon icon={faIdCard} /> View Users </Link>
+
     )
   }
   let CourseButton = null
   if (!COURSES_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
     console.log("Course")
     CourseButton = (
-      <button
-        className="naviBut"
-        title="Courses"
-        onClick={onCoursesClicked}
-      >
-        Courses List
-      </button>
+      <Link className="naviBut" to="/dash/courses">
+        <FontAwesomeIcon icon={faList} /> View Courses</Link>
     )
   }
 

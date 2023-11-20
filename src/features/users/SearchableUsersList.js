@@ -2,6 +2,11 @@ import User from "./User";
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "./usersApiSlice";
 import { useState } from "react";
+import {
+    faUserPlus
+} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
 
 const SearchableUsersList = () => {
     const users = useSelector(selectAllUsers);
@@ -14,7 +19,8 @@ const SearchableUsersList = () => {
                 user.firstName.toLowerCase().includes(filterWord.toLowerCase()) ||
                 user.lastName.toLowerCase().includes(filterWord.toLowerCase()) ||
                 user.middleName.toLowerCase().includes(filterWord.toLowerCase()) ||
-                user.courseProg.toLowerCase().includes(filterWord.toLowerCase())
+                user.courseProg.toLowerCase().includes(filterWord.toLowerCase()) ||
+                user.role.toLowerCase().includes(filterWord.toLowerCase())
         })
         const tableContent = result?.length
             ? result.slice(0, 10).map(user => <User key={user.id} userId={user.id} />)
@@ -39,13 +45,19 @@ const SearchableUsersList = () => {
                                 value={filterWord}
                                 onChange={onFilterWordChanged}
                             />
+
+                            <Link className="naviBut" to="/dash/users/new">
+
+                                <FontAwesomeIcon icon={faUserPlus} /> Add User</Link>
                         </label>
+
                     </p>
 
                 </div>
 
                 {result.length !== 0 &&
                     <>
+
                         <br />
                         <p> Displaying top 10 results of search:</p>
 
