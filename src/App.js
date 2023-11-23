@@ -52,8 +52,10 @@ function App() {
                 </Route>
                 <Route path="petitions">
                   <Route index element={<SearchablePetitionsList />} />
-                  <Route path="new" element={<NewPetition />} />
 
+                  <Route element={<RequireAuth allowedRoles={[ROLE.Student]} />}>
+                    <Route path="new" element={<NewPetition />} />
+                  </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLE.Admin, ROLE.Instructor]} />}>
                     <Route path="edit/:petid" element={<ViewPetiionAd />} />
                   </Route>
