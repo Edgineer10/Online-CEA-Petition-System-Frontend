@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectAllPetitions } from "./petitionsApiSlice";
 import { useState } from "react";
 import {
-    faTasks
+    faCirclePlus
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
@@ -53,7 +53,7 @@ const SearchablePetitionsList = () => {
                             />
 
                             {user.role === "Student" && <Link className="naviBut" to="/dash/petitions/new">
-                                <FontAwesomeIcon icon={faTasks} /> Create Petition</Link>}
+                                <FontAwesomeIcon icon={faCirclePlus} /> Create Petition</Link>}
                         </label>
 
                     </p>

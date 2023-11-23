@@ -1,20 +1,12 @@
 import React from 'react'
+import Match from './Match';
 
 const Usermatch = ({ choices }) => {
 
     const tableContent = choices?.length
-        ? choices.slice(0, 10).map((petitionee) => <>
-
-            <tr className="table__row user">
-                <td className={`table__cell usermatch`}>{petitionee.idNumber}</td>
-                <td className={`table__cell usermatch`}>
-                    {petitionee.lastName + ", " + petitionee.firstName + " " + petitionee.middleName}
-                </td>
-                <td className={`table__cell usermatch`}>
-                    {petitionee.courseProg + " " + petitionee.year}
-                </td>
-            </tr>
-        </>)
+        ? choices.slice(0, 10).map((petitionee) =>
+            <Match key={petitionee.idNumber} petitionee={petitionee} />
+        )
         : null;
 
     return (

@@ -10,7 +10,7 @@ import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersApiSlice";
-import Usermatch from "./Usermatch";
+import Usermatch from './Usermatch'
 
 const EditPetitionFormAd = ({ petition, user }) => {
     const [updatePetition, { isLoading, isSuccess, isError, error }] =
@@ -43,7 +43,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
     let usermatch = null;
     const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
     if (idNumber.length >= 2 && choices) {
-        usermatch = <Usermatch choices={choices} />
+        usermatch = <Usermatch key={choices.length} choices={choices} />
     }
 
     const onDeletePetitionClicked = async (e) => {
@@ -57,6 +57,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
         e.preventDefault();
         if (!isLoading && users) {
+            console.log(aduser)
             if (aduser && !petition.petitionee.includes(aduser.id) && aduser.role === "Student") {
                 await updatePetition({
                     id: petition.id,
@@ -65,8 +66,14 @@ const EditPetitionFormAd = ({ petition, user }) => {
                     petitionee: [...petition.petitionee, aduser.id],
                 })
             } else {
-                window.alert("No User Found")
+                if (petition.petitionee.includes(aduser.id)) {
+                    window.alert("Student is already in the petition")
+
+                } else {
+                    window.alert("No User Found")
+                }
             }
+
         }
     };
 

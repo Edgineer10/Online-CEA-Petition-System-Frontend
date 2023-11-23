@@ -7,20 +7,32 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
+import useAuth from "../../hooks/useAuth";
 
 const SearchableUsersList = () => {
+    const { role } = useAuth();
+
     const users = useSelector(selectAllUsers);
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
     let content
     if (users) {
         const result = users.filter((user) => {
-            return user.idNumber.toLowerCase().includes(filterWord.toLowerCase()) ||
-                user.firstName.toLowerCase().includes(filterWord.toLowerCase()) ||
-                user.lastName.toLowerCase().includes(filterWord.toLowerCase()) ||
-                user.middleName.toLowerCase().includes(filterWord.toLowerCase()) ||
-                user.courseProg.toLowerCase().includes(filterWord.toLowerCase()) ||
-                user.role.toLowerCase().includes(filterWord.toLowerCase())
+            if (role === "Admin") {
+                return user.idNumber.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.firstName.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.lastName.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.middleName.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.courseProg.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.role.toLowerCase().includes(filterWord.toLowerCase())
+            } else {
+                return (user.idNumber.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.firstName.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.lastName.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.middleName.toLowerCase().includes(filterWord.toLowerCase()) ||
+                    user.courseProg.toLowerCase().includes(filterWord.toLowerCase())
+                ) && user.role === "Student"
+            }
         })
         const tableContent = result?.length
             ? result.slice(0, 10).map(user => <User key={user.id} userId={user.id} />)

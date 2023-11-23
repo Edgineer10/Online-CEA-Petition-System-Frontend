@@ -47,7 +47,7 @@ const DashHeader = () => {
   if (PETITIONS_REGEX.test(pathname) && role === "Student") {
     newPetitionButton = (
 
-      <Link className="naviBut" to="/dash/petitions/new"><FontAwesomeIcon icon={faFileCirclePlus} /> Add Petition</Link>
+      <Link className="naviBut" to="/dash/petitions/new"><FontAwesomeIcon icon={faFileCirclePlus} /> Create Petition</Link>
 
     )
   }

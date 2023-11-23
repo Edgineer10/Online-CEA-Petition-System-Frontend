@@ -20,6 +20,9 @@ import SearchableCoursesList from "./features/courses/SearchableCoursesList.js";
 import SearchableUsersList from "./features/users/SearchableUsersList.js";
 import EditPasword from './features/users/EditPassword.js'
 import SearchablePetitionsList from "./features/petitions/SearchablePetitionsList.js";
+import RequireAuth from "./features/auth/RequireAuth.js";
+import { ROLE } from "./config/role.js";
+
 function App() {
   return (
     <Routes>
@@ -27,30 +30,35 @@ function App() {
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
         <Route element={<PersistLogin />}>
-          <Route element={<Prefetch />}>
-            <Route path="dash" element={<DashLayout />}>
-              <Route index element={<Welcome />} />
+          <Route element={<RequireAuth allowedRoles={[...Object.values(ROLE)]} />}>
+            <Route element={<Prefetch />}>
+              <Route path="dash" element={<DashLayout />}>
+                <Route index element={<Welcome />} />
+                <Route path="user">
+                  <Route index element={<EditPasword />} />
+                </Route>
+                <Route element={<RequireAuth allowedRoles={[ROLE.Admin, ROLE.Instructor]} />}>
+                  <Route path="users">
+                    <Route index element={<SearchableUsersList />} />
+                    <Route path=":id" element={<EditUser />} />
+                    <Route path="new" element={<NewUserForm />} />
+                  </Route>
 
-              <Route path="user">
-                <Route index element={<EditPasword />} />
-              </Route>
-              <Route path="users">
-                <Route index element={<SearchableUsersList />} />
-                <Route path=":id" element={<EditUser />} />
-                <Route path="new" element={<NewUserForm />} />
-              </Route>
+                  <Route path="courses">
+                    <Route index element={<SearchableCoursesList />} />
+                    <Route path=":id" element={<EditCourse />} />
+                    <Route path="new" element={<NewCourse />} />
+                  </Route>
+                </Route>
+                <Route path="petitions">
+                  <Route index element={<SearchablePetitionsList />} />
+                  <Route path="new" element={<NewPetition />} />
 
-              <Route path="courses">
-                <Route index element={<SearchableCoursesList />} />
-                <Route path=":id" element={<EditCourse />} />
-                <Route path="new" element={<NewCourse />} />
-              </Route>
-
-              <Route path="petitions">
-                <Route index element={<SearchablePetitionsList />} />
-                <Route path="new" element={<NewPetition />} />
-                <Route path="edit/:petid" element={<ViewPetiionAd />} />
-                <Route path=":petid" element={<ViewPetiion />} />
+                  <Route element={<RequireAuth allowedRoles={[ROLE.Admin, ROLE.Instructor]} />}>
+                    <Route path="edit/:petid" element={<ViewPetiionAd />} />
+                  </Route>
+                  <Route path=":petid" element={<ViewPetiion />} />
+                </Route>
               </Route>
             </Route>
           </Route>

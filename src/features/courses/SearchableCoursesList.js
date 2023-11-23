@@ -2,7 +2,9 @@ import Course from "./Course"
 import { useSelector } from "react-redux";
 import { selectAllCourses } from "./coursesApiSlice";
 import { useState } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 const SearchableCoursesList = () => {
     const courses = useSelector(selectAllCourses);
     const [filterWord, setFilterWorld] = useState("");
@@ -39,6 +41,8 @@ const SearchableCoursesList = () => {
                                 value={filterWord}
                                 onChange={onFilterWordChanged}
                             />
+                            <Link className="naviBut" to="/dash/courses/new">
+                                <FontAwesomeIcon icon={faSquarePlus} /> Add Course</Link>
                         </label>
                     </p>
 

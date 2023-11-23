@@ -5,9 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 import { ROLE } from "../../config/role";
+import useAuth from "../../hooks/useAuth";
 
 
 const NewUserForm = () => {
+
+    const { role: userrole } = useAuth();
     const [addNewUser, { isLoading, isSuccess, isError, error }] =
         useAddNewUserMutation();
 
@@ -25,7 +28,7 @@ const NewUserForm = () => {
                 {Object.values(ROLE)[i]}
             </option>
         );
-    });
+    })
 
 
     const [idNumber, setIdNumber] = useState("");
@@ -145,20 +148,24 @@ const NewUserForm = () => {
                     value={password}
                     onChange={onPasswordChanged}
                 />
-                <label className="form__label" htmlFor="role">
-                    Role:
-                </label>
-                <select
-                    id="role"
-                    name="role"
-                    className={`form__select ${validRoleClass}`}
-                    multiple={false}
-                    size="1"
-                    value={role}
-                    onChange={onRoleChanged}
-                >
-                    {roleoptions}
-                </select>
+                {userrole === "Admin" &&
+                    <>
+                        <label className="form__label" htmlFor="role">
+                            Role:
+                        </label>
+                        <select
+                            id="role"
+                            name="role"
+                            className={`form__select ${validRoleClass}`}
+                            multiple={false}
+                            size="1"
+                            value={role}
+                            onChange={onRoleChanged}
+                        >
+                            {roleoptions}
+                        </select>
+                    </>
+                }
                 <label className="form__label" htmlFor="firstname">
                     First Name: <span className="nowrap">[3-20 letters]</span>
                 </label>
