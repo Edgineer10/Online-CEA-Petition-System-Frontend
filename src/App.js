@@ -18,9 +18,10 @@ import PersistLogin from "./features/auth/PersistLogin.js";
 import ViewPetiionAd from "./features/petitions/ViewPetition.js";
 import SearchableCoursesList from "./features/courses/SearchableCoursesList.js";
 import SearchableUsersList from "./features/users/SearchableUsersList.js";
-import EditPasword from './features/users/EditPassword.js'
+import EditPasword from "./features/users/EditPassword.js";
 import SearchablePetitionsList from "./features/petitions/SearchablePetitionsList.js";
 import RequireAuth from "./features/auth/RequireAuth.js";
+import NotAllowed from "./components/NotAllowed.js";
 import { ROLE } from "./config/role.js";
 
 function App() {
@@ -29,15 +30,20 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
+        <Route path="notallowed" element={<NotAllowed />} />
         <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={[...Object.values(ROLE)]} />}>
+          <Route element={<RequireAuth allowedRoles={Object.values(ROLE)} />}>
             <Route element={<Prefetch />}>
               <Route path="dash" element={<DashLayout />}>
                 <Route index element={<Welcome />} />
                 <Route path="user">
                   <Route index element={<EditPasword />} />
                 </Route>
-                <Route element={<RequireAuth allowedRoles={[ROLE.Admin, ROLE.Instructor]} />}>
+                <Route
+                  element={
+                    <RequireAuth allowedRoles={[ROLE.Admin, ROLE.Instructor]} />
+                  }
+                >
                   <Route path="users">
                     <Route index element={<SearchableUsersList />} />
                     <Route path=":id" element={<EditUser />} />
@@ -53,10 +59,18 @@ function App() {
                 <Route path="petitions">
                   <Route index element={<SearchablePetitionsList />} />
 
-                  <Route element={<RequireAuth allowedRoles={[ROLE.Student]} />}>
+                  <Route
+                    element={<RequireAuth allowedRoles={[ROLE.Student]} />}
+                  >
                     <Route path="new" element={<NewPetition />} />
                   </Route>
-                  <Route element={<RequireAuth allowedRoles={[ROLE.Admin, ROLE.Instructor]} />}>
+                  <Route
+                    element={
+                      <RequireAuth
+                        allowedRoles={[ROLE.Admin, ROLE.Instructor]}
+                      />
+                    }
+                  >
                     <Route path="edit/:petid" element={<ViewPetiionAd />} />
                   </Route>
                   <Route path=":petid" element={<ViewPetiion />} />
