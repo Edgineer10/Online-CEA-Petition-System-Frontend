@@ -4,8 +4,8 @@ import Public from "./components/Public";
 import Login from "./features/auth/Login";
 import DashLayout from "./components/DashLayout.js";
 import Welcome from "./features/auth/Welcome";
-//import CoursesList from "./features/courses/CoursesList";
-//import UsersList from "./features/users/UsersList";
+import CoursesList from "./features/courses/CoursesList";
+import UsersList from "./features/users/UsersList";
 import EditUser from "./features/users/EditUser";
 import NewUserForm from "./features/users/NewUserForm";
 import EditCourse from "./features/courses/EditCourse";
@@ -16,8 +16,6 @@ import NewPetition from "./features/petitions/NewPetition.js";
 import ViewPetiion from "./features/petitions/ViewPetition.js";
 import PersistLogin from "./features/auth/PersistLogin.js";
 import ViewPetiionAd from "./features/petitions/ViewPetition.js";
-import SearchableCoursesList from "./features/courses/SearchableCoursesList.js";
-import SearchableUsersList from "./features/users/SearchableUsersList.js";
 import EditPasword from "./features/users/EditPassword.js";
 import SearchablePetitionsList from "./features/petitions/SearchablePetitionsList.js";
 import RequireAuth from "./features/auth/RequireAuth.js";
@@ -45,13 +43,13 @@ function App() {
                   }
                 >
                   <Route path="users">
-                    <Route index element={<SearchableUsersList />} />
+                    <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
                     <Route path="new" element={<NewUserForm />} />
                   </Route>
 
                   <Route path="courses">
-                    <Route index element={<SearchableCoursesList />} />
+                    <Route index element={<CoursesList />} />
                     <Route path=":id" element={<EditCourse />} />
                     <Route path="new" element={<NewCourse />} />
                   </Route>

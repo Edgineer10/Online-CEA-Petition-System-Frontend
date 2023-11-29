@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import useAuth from "../../hooks/useAuth";
 
 
-const SearchablePetitionsList = () => {
+const SearchablePetitionsList = ({ petitions }) => {
     const { id, courseProg, role } = useAuth();
     const user = {
         id: id,
@@ -18,7 +18,6 @@ const SearchablePetitionsList = () => {
         role: role
     };
 
-    const petitions = useSelector(selectAllPetitions);
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
     let content

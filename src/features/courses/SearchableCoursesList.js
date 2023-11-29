@@ -1,12 +1,9 @@
 import Course from "./Course"
-import { useSelector } from "react-redux";
-import { selectAllCourses } from "./coursesApiSlice";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-const SearchableCoursesList = () => {
-    const courses = useSelector(selectAllCourses);
+const SearchableCoursesList = ({ courses }) => {
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
     let content

@@ -1,13 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from 'react-router-dom'
-
-import { useSelector } from 'react-redux'
-import { selectCourseById } from './coursesApiSlice'
-
+import { memo } from 'react'
+import { useGetCoursesQuery } from './coursesApiSlice'
 const Course = ({ courseId }) => {
 
-    const course = useSelector(state => selectCourseById(state, courseId))
+    const { course } = useGetCoursesQuery("coursesList", {
+        selectFromResult: ({ data }) => ({
+            course: data?.entities[courseId]
+        }),
+    })
 
     const navigate = useNavigate()
 
@@ -36,4 +38,5 @@ const Course = ({ courseId }) => {
 
     } else return null
 }
-export default Course
+const memoizedCourse = memo(Course)
+export default memoizedCourse

@@ -8,10 +8,12 @@ const initialState = petitionsAdapter.getInitialState();
 export const petitionsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getPetitions: builder.query({
-            query: () => "/petitions",
-            validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError;
-            },
+            query: () => ({
+                url: '/petitions',
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                },
+            }),
             transformResponse: (responseData) => {
                 const loadedPetitions = responseData.map((petition) => {
                     petition.id = petition._id;

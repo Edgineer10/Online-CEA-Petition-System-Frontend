@@ -66,7 +66,7 @@ const DashHeader = () => {
   if (!USERS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
     console.log("User")
     UserButton = (
-      <Link className="naviBut" to="/dash/users"><FontAwesomeIcon icon={faIdCard} /> View Users </Link>
+      <Link className="naviBut" to="/dash/users"><FontAwesomeIcon icon={faIdCard} /> View {role === "Instructor" ? "Students" : "Users"} </Link>
 
     )
   }

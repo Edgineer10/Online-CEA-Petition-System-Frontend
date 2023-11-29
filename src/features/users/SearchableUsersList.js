@@ -1,6 +1,4 @@
 import User from "./User";
-import { useSelector } from "react-redux";
-import { selectAllUsers } from "./usersApiSlice";
 import { useState } from "react";
 import {
     faUserPlus
@@ -9,10 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import useAuth from "../../hooks/useAuth";
 
-const SearchableUsersList = () => {
+const SearchableUsersList = ({ users }) => {
     const { role } = useAuth();
-
-    const users = useSelector(selectAllUsers);
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
     let content
@@ -60,7 +56,7 @@ const SearchableUsersList = () => {
 
                             <Link className="naviBut" to="/dash/users/new">
 
-                                <FontAwesomeIcon icon={faUserPlus} /> Add User</Link>
+                                <FontAwesomeIcon icon={faUserPlus} /> Add {role === "Instructor" ? "Student" : "User"}</Link>
                         </label>
 
                     </p>

@@ -1,14 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-
-import { useSelector } from "react-redux";
-import { selectPetitionById } from "./petitionsApiSlice";
-
+import { useGetPetitionsQuery } from "./petitionsApiSlice";
+import { memo } from "react";
 const Petition = ({ petitionId, user }) => {
-  const petition = useSelector((state) =>
-    selectPetitionById(state, petitionId)
-  );
+  const { petition } = useGetPetitionsQuery("petitionsList", {
+    selectFromResult: ({ data }) => ({
+      petition: data?.entities[petitionId]
+    }),
+  })
+
   const navigate = useNavigate();
   if (petition && (user.role === "Instructor" || user.role === "Admin")) {
     const handleViewIns = () => navigate(`/dash/petitions/edit/${petitionId}`);
@@ -53,4 +54,5 @@ const Petition = ({ petitionId, user }) => {
     );
   } else return null;
 };
-export default Petition;
+const memoizedPetition = memo(Petition)
+export default memoizedPetition;

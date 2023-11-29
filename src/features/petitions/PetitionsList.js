@@ -1,5 +1,5 @@
 import { useGetPetitionsQuery } from "./petitionsApiSlice"
-import Petition from "./Petition"
+import SearchablePetitionsList from "./SearchablePetitionsList";
 import useAuth from "../../hooks/useAuth";
 const PetitionsList = () => {
 
@@ -9,7 +9,6 @@ const PetitionsList = () => {
         courseProg: courseProg,
         role: role
     };
-
 
     const {
         data: petitions,
@@ -31,29 +30,8 @@ const PetitionsList = () => {
     }
 
     if (isSuccess) {
-        const { ids } = petitions
-        const tableContent = ids?.length
-            ? ids.map(petitionId => <Petition key={petitionId} petitionId={petitionId} user={user} />)
-            : null
-
-        content = (
-            <table className="table table--petitions">
-                <thead className="table__thead">
-                    <tr>
-                        <th scope="col" className="table__th note__status">Course Program/s</th>
-                        <th scope="col" className="table__th note__status">Course Code</th>
-                        <th scope="col" className="table__th note__status">Descriptive Title</th>
-                        <th scope="col" className="table__th note__status">Units</th>
-                        <th scope="col" className="table__th note__status">Schedule</th>
-                        <th scope="col" className="table__th note__status">Petitionee/s</th>
-                        <th scope="col" className="table__th note__status">View/join</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tableContent}
-                </tbody>
-            </table>
-        )
+        const { ids, entities } = petitions
+        content = (<SearchablePetitionsList petitions={Object.values(entities)} />)
     }
 
     return content

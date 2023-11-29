@@ -1,6 +1,5 @@
 import { useGetCoursesQuery } from "./coursesApiSlice"
-import Course from "./Course"
-
+import SearchableCoursesList from "./SearchableCoursesList"
 const CoursesList = () => {
   const {
     data: courses,
@@ -23,29 +22,8 @@ const CoursesList = () => {
   }
 
   if (isSuccess) {
-    const { ids } = courses
-
-    const tableContent = ids?.length
-      ? ids.map(courseId => <Course key={courseId} courseId={courseId} />)
-      : null
-
-    content = (
-      <table className="table table--courses">
-        <thead className="table__thead">
-          <tr>
-            <th scope="col" className="table__th note__status">Course Program & Year</th>
-            <th scope="col" className="table__th note__status">Year & Term</th>
-            <th scope="col" className="table__th note__status">Course Code</th>
-            <th scope="col" className="table__th note__status">Descriptive Title</th>
-            <th scope="col" className="table__th note__status">Units</th>
-            <th scope="col" className="table__th note__status">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableContent}
-        </tbody>
-      </table>
-    )
+    const { ids, entities } = courses
+    content = (<SearchableCoursesList courses={Object.values(entities)} />)
   }
 
   return content

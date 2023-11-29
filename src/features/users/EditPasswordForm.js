@@ -20,6 +20,7 @@ const EditPasswordForm = ({ user }) => {
         if (isSuccess) {
             setPassword("");
             setPassword2("");
+            navigate("/dash");
         }
     }, [isSuccess, navigate]);
 

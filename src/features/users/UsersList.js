@@ -1,6 +1,5 @@
 import { useGetUsersQuery } from "./usersApiSlice";
-import User from "./User";
-
+import SearchableUsersList from "./SearchableUsersList";
 const UsersList = () => {
   const {
     data: users,
@@ -23,33 +22,8 @@ const UsersList = () => {
   }
 
   if (isSuccess) {
-    const { ids } = users;
-
-    const tableContent = ids?.length
-      ? ids.map((userId) => <User key={userId} userId={userId} />)
-      : null;
-
-    content = (
-      <table className="table table--users">
-        <thead className="table__thead">
-          <tr>
-            <th scope="col" className="table__th user__username">
-              ID Number
-            </th>
-            <th scope="col" className="table__th user__roles">
-              Name
-            </th>
-            <th scope="col" className="table__th user__roles">
-              Course & Year
-            </th>
-            <th scope="col" className="table__th user__edit">
-              Edit
-            </th>
-          </tr>
-        </thead>
-        <tbody>{tableContent}</tbody>
-      </table>
-    );
+    const { ids, entities } = users
+    content = (<SearchableUsersList users={Object.values(entities)} />)
   }
 
   return content;
