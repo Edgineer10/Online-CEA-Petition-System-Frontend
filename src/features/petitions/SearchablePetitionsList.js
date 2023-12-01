@@ -1,6 +1,4 @@
 import Petition from "./Petition";
-import { useSelector } from "react-redux";
-import { selectAllPetitions } from "./petitionsApiSlice";
 import { useState } from "react";
 import {
     faCirclePlus

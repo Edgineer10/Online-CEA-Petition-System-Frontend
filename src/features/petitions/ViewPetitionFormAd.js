@@ -21,7 +21,6 @@ const EditPetitionFormAd = ({ petition, user }) => {
     ] = useDeletePetitionMutation();
 
     const navigate = useNavigate();
-
     useEffect(() => {
         if (isSuccess) {
             navigate();

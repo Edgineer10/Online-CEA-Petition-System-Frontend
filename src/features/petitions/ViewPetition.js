@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { selectPetitionById } from "./petitionsApiSlice"
+import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import ViewPetiionForm from "./ViewPetitionForm"
 import ViewPetiionFormAd from "./ViewPetitionFormAd"
 import useAuth from "../../hooks/useAuth"
@@ -15,7 +14,14 @@ const ViewPetiion = () => {
     role: role
   };
   let content = null
-  const petition = useSelector((state) => selectPetitionById(state, petid));
+
+  const { petition } = useGetPetitionsQuery("petitionsList", {
+    selectFromResult: ({ data }) => ({
+      petition: data?.entities[petid]
+    }),
+  })
+
+
   if (user.role === "Student") {
     content = petition ? (
       <ViewPetiionForm petition={petition} user={user} />

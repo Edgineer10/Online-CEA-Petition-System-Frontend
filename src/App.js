@@ -12,12 +12,11 @@ import EditCourse from "./features/courses/EditCourse";
 import NewCourse from "./features/courses/NewCourse";
 import Prefetch from "./features/auth/Prefetch.js";
 import NewPetition from "./features/petitions/NewPetition.js";
-//import PetitionsList from "./features/petitions/PetitionsList.js";
+import PetitionsList from "./features/petitions/PetitionsList.js";
 import ViewPetiion from "./features/petitions/ViewPetition.js";
 import PersistLogin from "./features/auth/PersistLogin.js";
 import ViewPetiionAd from "./features/petitions/ViewPetition.js";
 import EditPasword from "./features/users/EditPassword.js";
-import SearchablePetitionsList from "./features/petitions/SearchablePetitionsList.js";
 import RequireAuth from "./features/auth/RequireAuth.js";
 import NotAllowed from "./components/NotAllowed.js";
 import { ROLE } from "./config/role.js";
@@ -55,7 +54,7 @@ function App() {
                   </Route>
                 </Route>
                 <Route path="petitions">
-                  <Route index element={<SearchablePetitionsList />} />
+                  <Route index element={<PetitionsList />} />
 
                   <Route
                     element={<RequireAuth allowedRoles={[ROLE.Student]} />}
