@@ -2,17 +2,19 @@ import { useGetUsersQuery } from "../users/usersApiSlice";
 
 
 const Petitionee = ({ userId, user, onDeleteStudent }) => {
-  console.log(userId)
+
   const onDeleteStud = (e) => {
     e.preventDefault()
     onDeleteStudent(userId)
   }
 
-  const { petitionee } = useGetUsersQuery("usersList", {
-    selectFromResult: ({ data }) => ({
-      user: data?.entities[userId]
-    }),
-  })
+  const { petitionee } =
+    useGetUsersQuery("usersList", {
+      selectFromResult: ({ data }) => ({
+        user: data?.entities[userId]
+      }),
+    })
+  console.log(petitionee)
 
 
   if (petitionee && user.role === "Student") {
