@@ -2,7 +2,7 @@ import React from "react";
 import Petitionee from "./Petitionee";
 const PetitioneeTable = ({ petitionee, user, onDeleteStudent }) => {
   const tableContent = petitionee?.length
-    ? petitionee.map((userId) => <Petitionee key={userId} userId={userId} user={user} onDeleteStudent={onDeleteStudent} />)
+    ? petitionee.map((userId) => <Petitionee key={userId} userId={userId} curUser={user} onDeleteStudent={onDeleteStudent} />)
     : null;
 
 

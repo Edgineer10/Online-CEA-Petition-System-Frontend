@@ -86,7 +86,7 @@ const NewUserForm = () => {
         e.preventDefault();
         if (canSave) {
             await addNewUser({
-                idNumber,
+                idNumber: idNumber.replace(/\s/g, ''),
                 password,
                 role,
                 firstName,

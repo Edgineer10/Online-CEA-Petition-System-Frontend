@@ -1,8 +1,6 @@
 import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import SearchablePetitionsList from "./SearchablePetitionsList";
 const PetitionsList = () => {
-
-
     const {
         data: petitions,
         isLoading,

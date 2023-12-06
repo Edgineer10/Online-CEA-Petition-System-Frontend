@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+//index page element for the application index route path
+//contains the link to other route like login
 const Public = () => {
   const content = (
     <section className="public">

@@ -1,10 +1,14 @@
-import { useSelector } from "react-redux";
-import { selectAllCourses } from "../courses/coursesApiSlice";
+import { useGetCoursesQuery } from "../courses/coursesApiSlice";
 import NewPetitionForm from "./NewPetitionForm";
 import useAuth from "../../hooks/useAuth";
 
 const NewPetition = () => {
-    const courses = useSelector(selectAllCourses);
+    const { courses } = useGetCoursesQuery("coursesList", {
+        selectFromResult: ({ data }) => ({
+            courses: data.entities
+        }),
+    })
+
 
     const { id, courseProg } = useAuth();
     const user = {

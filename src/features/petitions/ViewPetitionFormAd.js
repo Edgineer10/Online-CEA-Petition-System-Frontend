@@ -8,8 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
-import { useSelector } from "react-redux";
-import { selectAllUsers } from "../users/usersApiSlice";
+import { useGetUsersQuery } from "../users/usersApiSlice";
 import Usermatch from './Usermatch'
 
 const EditPetitionFormAd = ({ petition, user }) => {
@@ -37,10 +36,20 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
 
     const [idNumber, setIdNumber] = useState("");
-    const users = useSelector(selectAllUsers);
-    const aduser = users ? users.find(user => { return user.idNumber === idNumber }) : null;
+
+    const { users } = useGetUsersQuery("usersList", {
+        selectFromResult: ({ data }) => ({
+            users: data.entities
+        }),
+    })
+
+    const aduser = users ? Object.values(users).find(user => { return user.idNumber.replace(/\s/g, '') === idNumber }) : null;
+    console.log(aduser)
+    const choices = users ? Object.values(users).filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
+
+
+
     let usermatch = null;
-    const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
     if (idNumber.length >= 2 && choices) {
         usermatch = <Usermatch key={choices.length} choices={choices} />
     }
@@ -55,8 +64,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
     const onAddPetitioneeClicked = async (e) => {
 
         e.preventDefault();
-        if (!isLoading && users) {
-            console.log(aduser)
+        if (!isLoading && aduser) {
             if (aduser && !petition.petitionee.includes(aduser.id) && aduser.role === "Student") {
                 await updatePetition({
                     id: petition.id,

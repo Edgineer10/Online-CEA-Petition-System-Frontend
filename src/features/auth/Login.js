@@ -6,8 +6,9 @@ import { setCredentials } from './authSlice'
 import { useLoginMutation } from './authApiSlice'
 
 import usePersist from '../../hooks/usePersist'
-
+//LOGIN PAGE ELEMENT
 const Login = () => {
+
     const userRef = useRef()
     const errRef = useRef()
     const [idNumber, setIdNumber] = useState('')

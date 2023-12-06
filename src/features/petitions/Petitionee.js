@@ -1,33 +1,33 @@
 import { useGetUsersQuery } from "../users/usersApiSlice";
+import { memo } from "react";
 
 
-const Petitionee = ({ userId, user, onDeleteStudent }) => {
+const Petitionee = ({ userId, curUser, onDeleteStudent }) => {
 
   const onDeleteStud = (e) => {
     e.preventDefault()
     onDeleteStudent(userId)
   }
 
-  const { petitionee } =
+  const { user } =
     useGetUsersQuery("usersList", {
       selectFromResult: ({ data }) => ({
         user: data?.entities[userId]
       }),
     })
-  console.log(petitionee)
 
 
-  if (petitionee && user.role === "Student") {
-    const cellStatus = petitionee.active ? "" : "table__cell--inactive";
+  if (user && curUser.role === "Student") {
+    const cellStatus = user.active ? "" : "table__cell--inactive";
 
     return (
       <tr className="table__row user">
-        <td className={`table__cell ${cellStatus}`}>{petitionee.idNumber}</td>
+        <td className={`table__cell ${cellStatus}`}>{user.idNumber}</td>
         <td className={`table__cell ${cellStatus}`}>
-          {petitionee.lastName + ", " + petitionee.firstName + " " + petitionee.middleName}
+          {user.lastName + ", " + user.firstName + " " + user.middleName}
         </td>
         <td className={`table__cell ${cellStatus}`}>
-          {petitionee.courseProg + " " + petitionee.year}
+          {user.courseProg + " " + user.year}
         </td>
       </tr>
 
@@ -35,17 +35,17 @@ const Petitionee = ({ userId, user, onDeleteStudent }) => {
 
 
     );
-  } else if (petitionee && (user.role === "Admin" || user.role === "Instructor")) {
-    const cellStatus = petitionee.active ? "" : "table__cell--inactive";
+  } else if (user && (curUser.role === "Admin" || curUser.role === "Instructor")) {
+    const cellStatus = user.active ? "" : "table__cell--inactive";
 
     return (
       <tr className="table__row user">
-        <td className={`table__cell ${cellStatus}`}>{petitionee.idNumber}</td>
+        <td className={`table__cell ${cellStatus}`}>{user.idNumber}</td>
         <td className={`table__cell ${cellStatus}`}>
-          {petitionee.lastName + ", " + petitionee.firstName + " " + petitionee.middleName}
+          {user.lastName + ", " + user.firstName + " " + user.middleName}
         </td>
         <td className={`table__cell ${cellStatus}`}>
-          {petitionee.courseProg + " " + petitionee.year}
+          {user.courseProg + " " + user.year}
         </td>
         <td className={`table__cell ${cellStatus}`}>
           <button
@@ -65,4 +65,5 @@ const Petitionee = ({ userId, user, onDeleteStudent }) => {
   }
   else return null;
 };
-export default Petitionee;
+const memoizedPetionee = memo(Petitionee)
+export default memoizedPetionee;

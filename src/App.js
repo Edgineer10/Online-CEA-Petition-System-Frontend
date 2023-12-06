@@ -23,17 +23,19 @@ import { ROLE } from "./config/role.js";
 
 function App() {
   return (
+    //Establishing routes for the web application and assigning elements for every rout
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Public />} />
-        <Route path="login" element={<Login />} />
-        <Route path="notallowed" element={<NotAllowed />} />
-        <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={Object.values(ROLE)} />}>
-            <Route element={<Prefetch />}>
-              <Route path="dash" element={<DashLayout />}>
+        <Route index element={<Public />} /> {/* Index route with the Public element */}
+        <Route path="login" element={<Login />} /> {/* Login route with the Login element */}
+        <Route path="notallowed" element={<NotAllowed />} /> {/* redirection route with the NotAllowed element */}
+
+        <Route element={<PersistLogin />}>{/* Implements the Persist Login */}
+          <Route element={<RequireAuth allowedRoles={Object.values(ROLE)} />}> {/*Requires Authentication for the routes*/}
+            <Route element={<Prefetch />}> {/*Implements fetching queries*/}
+              <Route path="dash" element={<DashLayout />}>{/*Dashboard routes and Elements*/}
                 <Route index element={<Welcome />} />
-                <Route path="user">
+                <Route path="user">{/*User Details and change Password*/}
                   <Route index element={<EditPasword />} />
                 </Route>
                 <Route
@@ -41,19 +43,19 @@ function App() {
                     <RequireAuth allowedRoles={[ROLE.Admin, ROLE.Instructor]} />
                   }
                 >
-                  <Route path="users">
+                  <Route path="users"> {/*Users path route*/}
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
                     <Route path="new" element={<NewUserForm />} />
                   </Route>
 
-                  <Route path="courses">
+                  <Route path="courses"> {/*Courses path route*/}
                     <Route index element={<CoursesList />} />
                     <Route path=":id" element={<EditCourse />} />
                     <Route path="new" element={<NewCourse />} />
                   </Route>
                 </Route>
-                <Route path="petitions">
+                <Route path="petitions"> {/*Petitions path route*/}
                   <Route index element={<PetitionsList />} />
 
                   <Route

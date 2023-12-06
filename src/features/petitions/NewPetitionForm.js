@@ -10,7 +10,7 @@ const NewCourseForm = ({ courses, user }) => {
     const [addNewPetition, { isLoading, isSuccess, isError, error }] =
         useAddNewPetitionMutation();
     const navigate = useNavigate();
-    const fcourse = courses.filter(course => { return course.courseProg.includes(user.courseProg) })
+    const fcourse = Object.values(courses).filter(course => { return course.courseProg.includes(user.courseProg) })
     const options = fcourse.map((course) => {
         return (
             <option key={course.id} value={course.id}>
