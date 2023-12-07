@@ -38,6 +38,7 @@ const Login = () => {
             setIdNumber('')
             setPassword('')
             navigate('/dash')
+
         } catch (err) {
             if (!err.status) {
                 setErrMsg('No Server Response');

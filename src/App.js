@@ -20,8 +20,9 @@ import EditPasword from "./features/users/EditPassword.js";
 import RequireAuth from "./features/auth/RequireAuth.js";
 import NotAllowed from "./components/NotAllowed.js";
 import { ROLE } from "./config/role.js";
-
+import useTitle from "./hooks/useTitle.js";
 function App() {
+  useTitle('UC-CEA Online Petition')
   return (
     //Establishing routes for the web application and assigning elements for every rout
     <Routes>

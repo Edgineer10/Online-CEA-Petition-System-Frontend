@@ -2,7 +2,9 @@ import { useParams } from "react-router-dom";
 import { useGetCoursesQuery } from "./coursesApiSlice";
 import EditCourseForm from "./EditCourseForm";
 import useAuth from "../../hooks/useAuth";
+import useTitle from "../../hooks/useTitle";
 const EditCourse = () => {
+  useTitle('UC-CEA Edit Course')
   const { id } = useParams();
   const { role } = useAuth();
 

@@ -1,6 +1,8 @@
 import { useGetCoursesQuery } from "./coursesApiSlice"
 import SearchableCoursesList from "./SearchableCoursesList"
+import useTitle from "../../hooks/useTitle"
 const CoursesList = () => {
+  useTitle('UC-CEA Courses')
   const {
     data: courses,
     isLoading,
@@ -22,7 +24,7 @@ const CoursesList = () => {
   }
 
   if (isSuccess) {
-    const { ids, entities } = courses
+    const { entities } = courses
     content = (<SearchableCoursesList courses={Object.values(entities)} />)
   }
 

@@ -6,8 +6,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
-
+import useTitle from "../../hooks/useTitle";
 const EditPetitionForm = ({ petition, user }) => {
+  useTitle('UC-CEA Join Petition')
+
   const [updatePetition, { isLoading, isSuccess, isError, error }] =
     useUpdatePetitionMutation();
   const [

@@ -6,9 +6,10 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 import { ROLE } from "../../config/role";
 import useAuth from "../../hooks/useAuth";
-
+import useTitle from "../../hooks/useTitle";
 
 const NewUserForm = () => {
+    useTitle('UC-CEA Add New User')
 
     const { role: userrole } = useAuth();
     const [addNewUser, { isLoading, isSuccess, isError, error }] =

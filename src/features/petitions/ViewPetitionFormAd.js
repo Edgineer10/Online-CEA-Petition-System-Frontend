@@ -10,8 +10,9 @@ import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
 import { useGetUsersQuery } from "../users/usersApiSlice";
 import Usermatch from './Usermatch'
-
+import useTitle from "../../hooks/useTitle";
 const EditPetitionFormAd = ({ petition, user }) => {
+    useTitle('UC-CEA Edit Petition')
     const [updatePetition, { isLoading, isSuccess, isError, error }] =
         useUpdatePetitionMutation();
     const [
@@ -39,13 +40,14 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
     const { users } = useGetUsersQuery("usersList", {
         selectFromResult: ({ data }) => ({
-            users: data.entities
+            users: data?.ids.map(id => data?.entities[id])
         }),
     })
 
-    const aduser = users ? Object.values(users).find(user => { return user.idNumber.replace(/\s/g, '') === idNumber }) : null;
+
+    const aduser = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === idNumber }) : null;
     console.log(aduser)
-    const choices = users ? Object.values(users).filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
+    const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
 
 
 

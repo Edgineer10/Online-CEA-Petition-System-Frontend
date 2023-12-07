@@ -1,6 +1,8 @@
 import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import SearchablePetitionsList from "./SearchablePetitionsList";
+import useTitle from "../../hooks/useTitle";
 const PetitionsList = () => {
+    useTitle('UC-CEA On-going Petitions')
     const {
         data: petitions,
         isLoading,

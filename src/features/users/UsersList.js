@@ -1,6 +1,9 @@
 import { useGetUsersQuery } from "./usersApiSlice";
 import SearchableUsersList from "./SearchableUsersList";
+import useTitle from "../../hooks/useTitle";
 const UsersList = () => {
+
+  useTitle('UC-CEA Users')
   const {
     data: users,
     isLoading,
@@ -22,7 +25,7 @@ const UsersList = () => {
   }
 
   if (isSuccess) {
-    const { ids, entities } = users
+    const { entities } = users
     content = (<SearchableUsersList users={Object.values(entities)} />)
   }
 

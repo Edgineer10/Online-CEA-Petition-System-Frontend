@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
-
+import useTitle from "../../hooks/useTitle";
 
 const NewCourse = () => {
+    useTitle('UC-CEA Add New Course')
     const [addNewCourse, { isLoading, isSuccess, isError, error }] =
         useAddNewCourseMutation();
 

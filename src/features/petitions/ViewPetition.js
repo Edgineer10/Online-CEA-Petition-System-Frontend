@@ -3,7 +3,7 @@ import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import ViewPetiionForm from "./ViewPetitionForm"
 import ViewPetiionFormAd from "./ViewPetitionFormAd"
 import useAuth from "../../hooks/useAuth"
-
+import useTitle from "../../hooks/useTitle"
 const ViewPetiion = () => {
   const { petid } = useParams();
 
