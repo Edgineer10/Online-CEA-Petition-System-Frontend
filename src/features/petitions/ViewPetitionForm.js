@@ -41,6 +41,7 @@ const EditPetitionForm = ({ petition, user }) => {
           id: petition.id,
           course: petition.course,
           schedule: petition.schedule,
+          status: petition.status,
           petitionee: [...petition.petitionee, user.id],
         })
         onJoinChanged();
@@ -53,6 +54,7 @@ const EditPetitionForm = ({ petition, user }) => {
             id: petition.id,
             course: petition.course,
             schedule: petition.schedule,
+            status: petition.status,
             petitionee: petition.petitionee.filter((userr) => {
               return userr !== user.id
             })
@@ -82,7 +84,7 @@ const EditPetitionForm = ({ petition, user }) => {
         </div>
         <PetitionDetails petition={petition} />
 
-        {user.role === "Student" && <label
+        {(user.role === "Student" && petition.status === "On-going") && <label
           className="form__label form__checkbox-container"
           htmlFor="user-active"
         >

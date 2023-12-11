@@ -56,7 +56,7 @@ const DashHeader = () => {
 
   let PetitionButton = null
   if (!PETITIONS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash')) {
-    console.log("Petition")
+
     PetitionButton = (
 
       <Link className="naviBut" to="/dash/petitions"><FontAwesomeIcon icon={faFile} /> View Petitions</Link>
@@ -64,7 +64,7 @@ const DashHeader = () => {
   }
   let UserButton = null
   if (!USERS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
-    console.log("User")
+
     UserButton = (
       <Link className="naviBut" to="/dash/users"><FontAwesomeIcon icon={faIdCard} /> View {role === "Instructor" ? "Students" : "Users"} </Link>
 
@@ -72,7 +72,7 @@ const DashHeader = () => {
   }
   let CourseButton = null
   if (!COURSES_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash') && (role === "Admin" || role === "Instructor")) {
-    console.log("Course")
+
     CourseButton = (
       <Link className="naviBut" to="/dash/courses">
         <FontAwesomeIcon icon={faList} /> View Courses</Link>

@@ -278,6 +278,14 @@ tr {
   color: var(--STATUS-COMPLETE);
 }
 
+.pet__status--open {
+  color: rgb(209, 66, 0);
+}
+
+.pet__status--completed {
+  color: rgb(0, 193, 241);
+}
+
 
 /* || FORM - GENERAL */
 
@@ -428,4 +436,15 @@ padding: 1rem;
 .naviBut{
   padding: .3rem;
   margin: .5rem;
+}
+
+.pagBut{
+  margin: .2rem;
+  padding: .5rem;
+}
+.pagination{
+  
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 3rem;
 }

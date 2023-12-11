@@ -13,10 +13,13 @@ const Petition = ({ petitionId, user }) => {
   const navigate = useNavigate();
   if (petition && (user.role === "Instructor" || user.role === "Admin")) {
     const handleViewIns = () => navigate(`/dash/petitions/edit/${petitionId}`);
+    const status = petition.status === "On-going" ? <span className="pet__status--completed">{petition.status}</span>
+      : <span className="pet__status--open">{petition.status}</span>
+
     return (
       <tr className="table__row user">
         <td className={`table__cell `}>{petition.courseProg.join(", ")}</td>
-        <td className={`table__cell `}>{petition.courseCode}</td>
+        <td className={`table__cell `}>{petition.courseCode}<br />{status}</td>
         <td className={`table__cell `}>{petition.descTitle}</td>
         <td className={`table__cell `}>{petition.unit}</td>
         <td className={`table__cell `}>{petition.schedule}</td>
@@ -34,12 +37,15 @@ const Petition = ({ petitionId, user }) => {
   else if (petition && user.role === "Student" && petition.courseProg.includes(user.courseProg)) {
     const joined = petition.petitionee.includes(user.id) ? <span className="note__status--completed">Joined</span>
       : null
+    const status = petition.status === "On-going" ? <span className="pet__status--completed">{petition.status}</span>
+      : <span className="pet__status--open">{petition.status}</span>
+
     const handleView = () => navigate(`/dash/petitions/${petitionId}`);
 
     return (
       <tr className="table__row user">
         <td className={`table__cell `}>{petition.courseProg.join(", ")}</td>
-        <td className={`table__cell `}>{petition.courseCode}</td>
+        <td className={`table__cell `}>{petition.courseCode}<br />{status}</td>
         <td className={`table__cell `}>{petition.descTitle}</td>
         <td className={`table__cell `}>{petition.unit}</td>
         <td className={`table__cell `}>{petition.schedule}</td>

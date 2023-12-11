@@ -18,72 +18,104 @@ const SearchablePetitionsList = ({ petitions }) => {
 
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
+
     let content
-    if (petitions) {
-        const result = petitions.filter((petition) => {
-            return petition.courseCode.toLowerCase().includes(filterWord.toLowerCase()) ||
-                petition.courseProg.toString().toLowerCase().includes(filterWord.toLowerCase()) ||
-                petition.descTitle.toLowerCase().includes(filterWord.toLowerCase())
-        })
-        const tableContent = result?.length
-            ? result.slice(0, 10).map(petition => <Petition key={petition.id} petitionId={petition.id} user={user} />)
-            : null
+    const result = petitions.filter((petition) => {
+        return petition.courseCode.toLowerCase().includes(filterWord.toLowerCase()) ||
+            petition.courseProg.toString().toLowerCase().includes(filterWord.toLowerCase()) ||
+            petition.descTitle.toLowerCase().includes(filterWord.toLowerCase()) ||
+            petition.status.toLowerCase().includes(filterWord.toLowerCase())
+    })
+    // Items per page
+    const itemsPerPage = 10;
 
-        content = (
-            <>
-                <div className="form">
-                    <p>
-                        <label
-                            className="form__label form__checkbox-container"
-                            htmlFor="user-active"
-                        >
-                            <label className="form__label" htmlFor="filterWord">
-                                Search Petitions:{" "}
-                            </label>
-                            <input
-                                className={`form__input`}
-                                id="filterWord"
-                                name="filterWord"
-                                type="filterWord"
-                                value={filterWord}
-                                onChange={onFilterWordChanged}
-                            />
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(result.length / itemsPerPage);
 
-                            {user.role === "Student" && <Link className="naviBut" to="/dash/petitions/new">
-                                <FontAwesomeIcon icon={faCirclePlus} /> Create Petition</Link>}
+    // State to manage the current page
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Calculate the index range for the current page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    // Get the current page data
+    const currentData = result.slice(startIndex, endIndex);
+
+    // Handle page change
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+
+    const tableContent = result?.length
+        ? currentData.map(petition => <Petition key={petition.id} petitionId={petition.id} user={user} />)
+        : null
+    content = (
+        <>
+            <div className="form">
+                <p>
+                    <label
+                        className="form__label form__checkbox-container"
+                        htmlFor="user-active"
+                    >
+                        <label className="form__label" htmlFor="filterWord">
+                            Search Petitions:{" "}
                         </label>
+                        <input
+                            className={`form__input`}
+                            id="filterWord"
+                            name="filterWord"
+                            type="filterWord"
+                            value={filterWord}
+                            onChange={onFilterWordChanged}
+                        />
 
-                    </p>
+                        {user.role === "Student" && <Link className="naviBut" to="/dash/petitions/new">
+                            <FontAwesomeIcon icon={faCirclePlus} /> Create Petition</Link>}
+                    </label>
 
-                </div>
+                </p>
 
-                {result.length !== 0 &&
-                    <>
+            </div>
 
-                        <br />
-                        <p> Displaying top 10 results of search:</p>
+            {result.length !== 0 &&
+                <>
 
-                        <table className="table table--petitions">
-                            <thead className="table__thead">
-                                <tr>
-                                    <th scope="col" className="table__th note__status">Course Program/s</th>
-                                    <th scope="col" className="table__th note__status">Course Code</th>
-                                    <th scope="col" className="table__th note__status">Descriptive Title</th>
-                                    <th scope="col" className="table__th note__status">Units</th>
-                                    <th scope="col" className="table__th note__status">Schedule</th>
-                                    <th scope="col" className="table__th note__status">Petitionee/s</th>
-                                    <th scope="col" className="table__th note__status">View/join</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {tableContent}
-                            </tbody>
-                        </table>
-                    </>
-                }
-            </>
-        )
-    }
+                    <br />
+
+                    <table className="table table--petitions">
+                        <thead className="table__thead">
+                            <tr>
+                                <th scope="col" className="table__th note__status">Course Program/s</th>
+                                <th scope="col" className="table__th note__status">Course Code</th>
+                                <th scope="col" className="table__th note__status">Descriptive Title</th>
+                                <th scope="col" className="table__th note__status">Units</th>
+                                <th scope="col" className="table__th note__status">Schedule</th>
+                                <th scope="col" className="table__th note__status">Petitionee/s</th>
+                                <th scope="col" className="table__th note__status">View/join</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableContent}
+                        </tbody>
+                    </table>
+                    <div className="pagination">
+                        {Array.from({ length: totalPages }).map((_, index) => (
+                            <button
+                                key={index + 1}
+                                className={index + 1 === currentPage ? 'pagBut active' : 'pagBut'}
+                                onClick={() => handlePageChange(index + 1)}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
+                </>
+            }
+        </>
+    )
+
 
     return content
 }

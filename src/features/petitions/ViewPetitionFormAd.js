@@ -46,7 +46,6 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
 
     const aduser = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === idNumber }) : null;
-    console.log(aduser)
     const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
 
 
@@ -72,6 +71,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
                     id: petition.id,
                     course: petition.course,
                     schedule: petition.schedule,
+                    status: petition.status,
                     petitionee: [...petition.petitionee, aduser.id],
                 })
             } else {
@@ -100,6 +100,31 @@ const EditPetitionFormAd = ({ petition, user }) => {
             })
         }
     }
+
+    const onSBclicked = async (e) => {
+        e.preventDefault();
+        console.log(petition.status === "On-going")
+        if (petition.status === "On-going") {
+            await updatePetition({
+                id: petition.id,
+                course: petition.course,
+                schedule: petition.schedule,
+                status: "Opened",
+                petitionee: petition.petitionee
+            })
+        } else {
+            await updatePetition({
+                id: petition.id,
+                course: petition.course,
+                schedule: petition.schedule,
+                status: "On-going",
+                petitionee: petition.petitionee
+            })
+        }
+
+
+    }
+
     const onIdNumberChanged = (e) => {
         setIdNumber(e.target.value)
     };
@@ -123,7 +148,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
                         </button>
                     </div>
                 </div>
-                <PetitionDetails petition={petition} />
+                <PetitionDetails petition={petition} onSBclicked={onSBclicked} />
 
                 {(user.role === "Admin" || user.role === "Instructor") && <label
                     className="form__label form__checkbox-container"
