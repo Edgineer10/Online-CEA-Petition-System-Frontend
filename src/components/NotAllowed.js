@@ -6,7 +6,7 @@ const NotAllowed = () => {
       <header>
         <h1>
           Welcome to{" "}
-          <span className="nowrap">UC-CEA Online Petition System!</span>
+          <span >UC-CEA Online Petition System!</span>
         </h1>
       </header>
       <main className="public__main">
