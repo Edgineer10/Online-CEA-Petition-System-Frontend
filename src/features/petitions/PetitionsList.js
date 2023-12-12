@@ -10,7 +10,7 @@ const PetitionsList = () => {
         isError,
         error
     } = useGetPetitionsQuery('petitionslist', {
-        pollingInterval: 10000,
+        pollingInterval: 30000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
