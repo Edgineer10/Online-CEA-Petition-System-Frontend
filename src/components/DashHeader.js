@@ -43,16 +43,6 @@ const DashHeader = () => {
     dashClass = "dash-header__container--small"
   }
 
-  let newPetitionButton = null
-  if (PETITIONS_REGEX.test(pathname) && role === "Student") {
-    newPetitionButton = (
-
-      <Link className="naviBut" to="/dash/petitions/new"><FontAwesomeIcon icon={faFileCirclePlus} /> Create Petition</Link>
-
-    )
-  }
-
-
 
   let PetitionButton = null
   if (!PETITIONS_REGEX.test(pathname) && !DASH_REGEX.test(pathname) && pathname.includes('/dash')) {
@@ -95,7 +85,6 @@ const DashHeader = () => {
   } else {
     buttonContent = (
       <>
-        {newPetitionButton}
         {PetitionButton}
         {UserButton}
         {CourseButton}

@@ -364,6 +364,29 @@ tr {
 }
 
 @media screen and (max-width: 400px) {
+  .dash-header__title {
+    padding: 0rem !important;
+}
+  .table--petitions{
+    font-size: .5rem;
+    padding: 0rem;
+  
+  }
+  .table--users{
+    font-size: .5rem;
+    padding: 0rem;
+  
+  }
+  .form__select {
+    width: 100%;
+  }
+  .dash-container {
+    margin-left: .1rem !important;
+  }
+  .naviBut {
+    padding: 0rem !important;
+    margin: 0.1rem !important;
+}
   h1 {
     font-size: 2rem;
   }
@@ -396,6 +419,9 @@ tr {
   }
 
   .table--notes {
+    grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
+  }
+  .table--petitions {
     grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
   }
 
