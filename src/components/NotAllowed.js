@@ -15,7 +15,7 @@ const NotAllowed = () => {
         <p>Dev: ELJ</p>
       </main>
       <footer>
-        <Link to="/dash">Back to Dashboard</Link>
+        <Link to="/">Back to Home</Link>
       </footer>
     </section>
   );
