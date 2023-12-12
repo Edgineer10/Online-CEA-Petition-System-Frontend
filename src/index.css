@@ -208,7 +208,7 @@ tr {
 }
 .table--petitions{
   
-  grid-template-columns: 2fr 1fr 3fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 3fr 1fr 1fr 1fr 1fr !important;
   padding: 1rem 3rem 1rem 1rem;
 
 }
@@ -372,6 +372,11 @@ tr {
     padding: 0rem;
   
   }
+  .table--courses{
+    font-size: .5rem;
+    padding: 0rem;
+  
+  }
   .table--users{
     font-size: .5rem;
     padding: 0rem;
@@ -397,6 +402,10 @@ tr {
 
   .icon-button {
     font-size: 1.5rem;
+  }
+  .table__button{
+    font-size: 1rem;
+
   }
 }
 
