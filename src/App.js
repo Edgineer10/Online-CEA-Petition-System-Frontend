@@ -56,11 +56,12 @@ function App() {
                     <Route path="new" element={<NewCourse />} />
                   </Route>
                 </Route>
+
                 <Route path="petitions"> {/*Petitions path route*/}
                   <Route index element={<PetitionsList />} />
 
                   <Route
-                    element={<RequireAuth allowedRoles={[ROLE.Student]} />}
+                    element={<RequireAuth allowedRoles={Object.values(ROLE)} />}
                   >
                     <Route path="new" element={<NewPetition />} />
                   </Route>

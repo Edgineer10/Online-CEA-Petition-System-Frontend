@@ -4,7 +4,7 @@ import Match from './Match';
 const Usermatch = ({ choices }) => {
 
     const tableContent = choices?.length
-        ? choices.slice(0, 10).map((petitionee) =>
+        ? choices.slice(0, 5).map((petitionee) =>
             <Match key={petitionee.idNumber} petitionee={petitionee} />
         )
         : null;

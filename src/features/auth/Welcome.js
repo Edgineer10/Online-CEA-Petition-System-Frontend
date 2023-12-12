@@ -18,6 +18,7 @@ const Welcome = () => {
 
       <h1>Welcome {name}!</h1>
       {(isAdmin || isInstructor || isStudent) && <p><Link to="/dash/petitions">View Petitions</Link></p>}
+      {(isAdmin || isInstructor || isStudent) && <p><Link to="/dash/petitions/new">Add Petitions</Link></p>}
       {(isStudent) && <p><Link to="/dash/petitions/new">Create Petition</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/courses">View Courses</Link></p>}
       {(isAdmin || isInstructor) && <p><Link to="/dash/courses/new">Add Course</Link></p>}
