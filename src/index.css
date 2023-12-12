@@ -206,8 +206,7 @@ tr {
   padding: 1rem 3rem 1rem 1rem;
 
 }
-.table--petitions{
-  
+.table--petitions{  
   grid-template-columns: 2fr 1fr 3fr 1fr 1fr 1fr 1fr !important;
   padding: 1rem 3rem 1rem 1rem;
 
