@@ -23,7 +23,13 @@ const EditUserForm = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [middleName, setMiddleName] = useState(user.middleName);
-  const [birthday, setBirthday] = useState(user.birthday);
+  const Bdate = new Date(user.birthday);
+  const [birthday, setBirthday] = useState(
+    Bdate.getFullYear() +
+    "-" +
+    (Bdate.getMonth() + 1) +
+    "-" +
+    Bdate.getDate());
   const [year, setYear] = useState(user.year);
   const [courseProg, setCourseProg] = useState(user.courseProg);
   const [active, setActive] = useState(user.active);
@@ -45,9 +51,9 @@ const EditUserForm = ({ user }) => {
 
   const onPasswordChanged = (e) => setPassword(e.target.value);
   const onRoleChanged = (e) => setRole(e.target.value);
-  const onFirstNameChanged = (e) => setFirstName(e.target.value);
-  const onLastNameChanged = (e) => setLastName(e.target.value);
-  const onMiddleNameChanged = (e) => setMiddleName(e.target.value);
+  const onFirstNameChanged = (e) => setFirstName(e.target.value.toUpperCase());
+  const onLastNameChanged = (e) => setLastName(e.target.value.toUpperCase());
+  const onMiddleNameChanged = (e) => setMiddleName(e.target.value.toUpperCase());
   const onBirthdayChanged = (e) => setBirthday(e.target.value);
   const onYearChanged = (e) => setYear(e.target.value);
   const onCourseProgChanged = (e) => {
@@ -126,7 +132,6 @@ const EditUserForm = ({ user }) => {
   const validBirthdayClass = !birthday ? "form__input--incomplete" : "";
   const validYearClass = !year ? "form__input--incomplete" : "";
   const validCourseProgClass = !courseProg ? "form__input--incomplete" : "";
-  const Bdate = new Date(user.birthday);
 
   const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
@@ -222,13 +227,7 @@ const EditUserForm = ({ user }) => {
           name="birthday"
           type="date"
           autoComplete="off"
-          value={
-            Bdate.getFullYear() +
-            "-" +
-            (Bdate.getMonth() + 1) +
-            "-" +
-            Bdate.getDate()
-          }
+          value={birthday}
           onChange={onBirthdayChanged}
         />
         <label className="form__label" htmlFor="year">

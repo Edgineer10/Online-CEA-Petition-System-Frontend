@@ -12,7 +12,7 @@ const EditUser = () => {
       user: data?.entities[id]
     }),
   })
-
+  console.log(user)
   const content = user ? <EditUserForm user={user} /> : <PulseLoader color={"#FFF"} />;
 
   return content;

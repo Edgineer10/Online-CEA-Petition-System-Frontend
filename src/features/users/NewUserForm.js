@@ -10,7 +10,6 @@ import useTitle from "../../hooks/useTitle";
 
 const NewUserForm = () => {
     useTitle('UC-CEA Add New User')
-
     const { role: userrole } = useAuth();
     const [addNewUser, { isLoading, isSuccess, isError, error }] =
         useAddNewUserMutation();
@@ -41,6 +40,7 @@ const NewUserForm = () => {
     const [birthday, setBirthday] = useState("");
     const [year, setYear] = useState(1);
     const [courseProg, setCourseProg] = useState("BSCE");
+    console.log(birthday)
 
     useEffect(() => {
         if (isSuccess) {
@@ -57,12 +57,12 @@ const NewUserForm = () => {
         }
     }, [isSuccess, navigate]);
 
-    const onIdNumberChanged = (e) => setIdNumber(e.target.value);
+    const onIdNumberChanged = (e) => setIdNumber(e.target.value.replace(/\s/g, ''));
     const onPasswordChanged = (e) => setPassword(e.target.value);
     const onRoleChanged = (e) => setRole(e.target.value);
-    const onFirstNameChanged = (e) => setFirstName(e.target.value);
-    const onLastNameChanged = (e) => setLastName(e.target.value);
-    const onMiddleNameChanged = (e) => setMiddleName(e.target.value);
+    const onFirstNameChanged = (e) => setFirstName(e.target.value.toUpperCase());
+    const onLastNameChanged = (e) => setLastName(e.target.value.toUpperCase());
+    const onMiddleNameChanged = (e) => setMiddleName(e.target.value.toUpperCase());
     const onBirthdayChanged = (e) => setBirthday(e.target.value);
     const onYearChanged = (e) => setYear(e.target.value);
     const onCourseProgChanged = (e) => {
