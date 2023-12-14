@@ -6,7 +6,6 @@ import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 import { ROLE } from "../../config/role";
 
-
 const EditUserForm = ({ user }) => {
   const [updateUser, { isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation();
@@ -25,13 +24,12 @@ const EditUserForm = ({ user }) => {
   const [middleName, setMiddleName] = useState(user.middleName);
   const Bdate = new Date(user.birthday);
   const [birthday, setBirthday] = useState(
-    Bdate.getFullYear() +
-    "-" +
-    (Bdate.getMonth() + 1) +
-    "-" +
-    Bdate.getDate());
+    Bdate.getFullYear() + "-" + (Bdate.getMonth() + 1) + "-" + Bdate.getDate()
+  );
+  const [gender, setGender] = useState(user.gender);
   const [year, setYear] = useState(user.year);
   const [courseProg, setCourseProg] = useState(user.courseProg);
+  const [currYear, setCurrYear] = useState(user.currYear);
   const [active, setActive] = useState(user.active);
 
   console.log();
@@ -43,8 +41,10 @@ const EditUserForm = ({ user }) => {
       setLastName("");
       setMiddleName("");
       setBirthday("");
+      setGender("");
       setYear("");
       setCourseProg("");
+      setCurrYear("");
       navigate("/dash/users");
     }
   }, [isSuccess, isDelSuccess, navigate]);
@@ -53,24 +53,29 @@ const EditUserForm = ({ user }) => {
   const onRoleChanged = (e) => setRole(e.target.value);
   const onFirstNameChanged = (e) => setFirstName(e.target.value.toUpperCase());
   const onLastNameChanged = (e) => setLastName(e.target.value.toUpperCase());
-  const onMiddleNameChanged = (e) => setMiddleName(e.target.value.toUpperCase());
+  const onMiddleNameChanged = (e) =>
+    setMiddleName(e.target.value.toUpperCase());
   const onBirthdayChanged = (e) => setBirthday(e.target.value);
+  const onGenderChanged = (e) => setGender(e.target.value);
   const onYearChanged = (e) => setYear(e.target.value);
   const onCourseProgChanged = (e) => {
-    console.log(e.target.value)
-    setCourseProg(e.target.value)
+    console.log(e.target.value);
+    setCourseProg(e.target.value);
   };
+  const onCurrYearChanged = (e) => setCurrYear(e.target.value);
   const onActiveChanged = () => setActive((prev) => !prev);
 
   const canSave =
     [
-      role ||
-      firstName ||
-      lastName ||
-      middleName ||
-      birthday ||
-      year ||
+      role,
+      firstName,
+      lastName,
+      middleName,
+      gender,
+      birthday,
+      year,
       courseProg,
+      currYear,
     ].every(Boolean) && !isLoading;
 
   const onSaveUserClicked = async (e) => {
@@ -85,8 +90,10 @@ const EditUserForm = ({ user }) => {
           lastName,
           middleName,
           birthday,
+          gender,
           year,
           courseProg,
+          currYear,
           active,
         });
       } else {
@@ -97,8 +104,10 @@ const EditUserForm = ({ user }) => {
           lastName,
           middleName,
           birthday,
+          gender,
           year,
           courseProg,
+          currYear,
           active,
         });
       }
@@ -130,8 +139,10 @@ const EditUserForm = ({ user }) => {
   const validLastNameClass = !lastName ? "form__input--incomplete" : "";
   const validMiddleNameClass = !middleName ? "form__input--incomplete" : "";
   const validBirthdayClass = !birthday ? "form__input--incomplete" : "";
+  const validGenderClass = !gender ? "form__input--incomplete" : "";
   const validYearClass = !year ? "form__input--incomplete" : "";
   const validCourseProgClass = !courseProg ? "form__input--incomplete" : "";
+  const validCurrYearClass = !currYear ? "form__input--incomplete" : "";
 
   const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
@@ -230,6 +241,25 @@ const EditUserForm = ({ user }) => {
           value={birthday}
           onChange={onBirthdayChanged}
         />
+        <label className="form__label" htmlFor="gender">
+          Gender:
+        </label>
+        <select
+          id="gender"
+          name="gender"
+          className={`form__select ${validGenderClass}`}
+          multiple={false}
+          size="1"
+          value={gender}
+          onChange={onGenderChanged}
+        >
+          <option key="Male" value="Male">
+            Male
+          </option>
+          <option key="Female" value="Female">
+            Female
+          </option>
+        </select>
         <label className="form__label" htmlFor="year">
           Year:
         </label>
@@ -269,6 +299,18 @@ const EditUserForm = ({ user }) => {
             onChange={onActiveChanged}
           />
         </label>
+        <label className="form__label" htmlFor="currYear">
+          Curriculum Year:
+        </label>
+        <input
+          className={`form__input ${validCurrYearClass}`}
+          id="currYear"
+          name="currYear"
+          type="number"
+          autoComplete="off"
+          value={currYear}
+          onChange={onCurrYearChanged}
+        />
       </form>
     </>
   );
