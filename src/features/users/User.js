@@ -7,9 +7,9 @@ import { memo } from "react";
 const User = ({ userId }) => {
   const { user } = useGetUsersQuery("usersList", {
     selectFromResult: ({ data }) => ({
-      user: data?.entities[userId]
+      user: data?.entities[userId],
     }),
-  })
+  });
 
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const User = ({ userId }) => {
           {user.lastName + ", " + user.firstName + " " + user.middleName}
         </td>
         <td className={`table__cell ${cellStatus}`}>
-          {user.courseProg + " " + user.year}
+          {user.courseProg + "(" + user.currYear + ") - " + user.year}
         </td>
         <td className={`table__cell ${cellStatus}`}>
           <button className="icon-button table__button" onClick={handleEdit}>
@@ -36,5 +36,5 @@ const User = ({ userId }) => {
     );
   } else return null;
 };
-const memoizedUser = memo(User)
+const memoizedUser = memo(User);
 export default memoizedUser;
