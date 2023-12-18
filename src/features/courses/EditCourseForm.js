@@ -58,12 +58,12 @@ const EditCourseForm = ({ course, role }) => {
   const canSave =
     [
       courseProg.length ||
-        currYear ||
-        courseCode ||
-        descTitle ||
-        unit ||
-        courseYear ||
-        courseSem,
+      currYear ||
+      courseCode ||
+      descTitle ||
+      unit ||
+      courseYear ||
+      courseSem,
     ].every(Boolean) && !isLoading;
 
   const onSaveCourseClicked = async (e) => {
@@ -154,7 +154,7 @@ const EditCourseForm = ({ course, role }) => {
           className={`form__input ${validCurrYearClass}`}
           id="curryear"
           name="curryear"
-          type="curryear"
+          type="number"
           value={currYear}
           onChange={onCurrYearChanged}
         />

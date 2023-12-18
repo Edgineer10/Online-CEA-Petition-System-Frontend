@@ -25,9 +25,10 @@ const NewCourseFormAd = ({ courses }) => {
             </option>
         );
     });
-    const [program, setProgram] = useState(Object.keys(PROGRAM)[0]);
 
-    const fcourse = Object.values(courses).filter(course => { return course.courseProg.includes(program) })
+    const [program, setProgram] = useState(Object.keys(PROGRAM)[0]);
+    const [currYear, setCurrYear] = useState("2018");
+    const fcourse = Object.values(courses).filter(course => { return course.courseProg.includes(program) && course.currYear.toString() === currYear.toString() })
     const options = fcourse.map((course) => {
         return (
             <option key={course.id} value={course.id}>
@@ -35,8 +36,7 @@ const NewCourseFormAd = ({ courses }) => {
             </option>
         )
     });
-
-    const [course, setCourse] = useState(fcourse[0].id);
+    const [course, setCourse] = useState(fcourse.length ? fcourse[0].id : '');
     const [petitionee, setPetitionee] = useState("");
     const [schedule, setSchedule] = useState("");
     const userfound = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === petitionee }) : null;
@@ -61,6 +61,7 @@ const NewCourseFormAd = ({ courses }) => {
     const onCourseChanged = (e) => setCourse(e.target.value);
     const onScheduleChanged = (e) => setSchedule(e.target.value);
     const onPetitioneeChanged = (e) => setPetitionee(e.target.value);
+    const onCurrYearChanged = (e) => setCurrYear(e.target.value);
     const canSave =
         [
             course &&
@@ -89,6 +90,7 @@ const NewCourseFormAd = ({ courses }) => {
     const validScheduleClass = !schedule ? "form__input--incomplete" : "";
     const validProgramClass = !program ? "form__input--incomplete" : "";
     const validPetitioneeClass = !petitionee ? "form__input--incomplete" : "";
+    const validCurrYearClass = !currYear ? "form__input--incomplete" : "";
 
     const content = (
         <>
@@ -116,6 +118,17 @@ const NewCourseFormAd = ({ courses }) => {
                 >
                     {pOptions}
                 </select>
+                <label className="form__label" htmlFor="curryear">
+                    Curriculum Year:{" "}
+                </label>
+                <input
+                    className={`form__input ${validCurrYearClass}`}
+                    id="curryear"
+                    name="curryear"
+                    type="number"
+                    value={currYear}
+                    onChange={onCurrYearChanged}
+                />
 
                 <label className="form__label" htmlFor="course">
                     Course :

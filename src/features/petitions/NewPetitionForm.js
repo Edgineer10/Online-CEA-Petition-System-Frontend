@@ -14,9 +14,6 @@ const NewCourseForm = ({ courses, user }) => {
       course.currYear.toString() === user.currYear.toString()
     );
   });
-  const ccourse = fcourse.filter((course) => {
-    return course.currYear === user.currYear;
-  });
   const options = fcourse.map((course) => {
     return (
       <option key={course.id} value={course.id}>
@@ -91,7 +88,7 @@ const NewCourseForm = ({ courses, user }) => {
           className={`form__input ${validScheduleClass}`}
           id="schedule"
           name="schedule"
-          type="schedule"
+          type="text"
           value={schedule}
           onChange={onScheduleChanged}
         />

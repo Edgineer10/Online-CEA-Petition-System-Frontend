@@ -21,6 +21,7 @@ import RequireAuth from "./features/auth/RequireAuth.js";
 import NotAllowed from "./components/NotAllowed.js";
 import { ROLE } from "./config/role.js";
 import useTitle from "./hooks/useTitle.js";
+import ArrangedCourse from "./features/courses/ArrangedCourses.js";
 function App() {
   useTitle('UC-CEA Online Petition')
   return (
@@ -54,6 +55,7 @@ function App() {
                     <Route index element={<CoursesList />} />
                     <Route path=":id" element={<EditCourse />} />
                     <Route path="new" element={<NewCourse />} />
+                    <Route path="general" element={<ArrangedCourse />} />
                   </Route>
                 </Route>
 

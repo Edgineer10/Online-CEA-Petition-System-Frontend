@@ -2,7 +2,7 @@ import Course from "./Course"
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 const SearchableCoursesList = ({ courses }) => {
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
@@ -38,6 +38,8 @@ const SearchableCoursesList = ({ courses }) => {
                                 value={filterWord}
                                 onChange={onFilterWordChanged}
                             />
+                            <Link className="naviBut" to="/dash/courses/general">
+                                <FontAwesomeIcon icon={faSearch} /> Filtered Search</Link>
                             <Link className="naviBut" to="/dash/courses/new">
                                 <FontAwesomeIcon icon={faSquarePlus} /> Add Course</Link>
                         </label>

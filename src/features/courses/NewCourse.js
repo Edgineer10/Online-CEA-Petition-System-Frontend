@@ -21,7 +21,7 @@ const NewCourse = () => {
   });
 
   const [courseProg, setCourseProg] = useState([]);
-  const [currYear, setCurrYear] = useState("2022");
+  const [currYear, setCurrYear] = useState("2018");
   const [courseCode, setCourseCode] = useState("");
   const [descTitle, setDescTitle] = useState("");
   const [unit, setUnit] = useState(3);
@@ -56,12 +56,12 @@ const NewCourse = () => {
   const canSave =
     [
       courseProg.length ||
-        currYear ||
-        courseCode ||
-        descTitle ||
-        unit ||
-        courseYear ||
-        courseSem,
+      currYear ||
+      courseCode ||
+      descTitle ||
+      unit ||
+      courseYear ||
+      courseSem,
     ].every(Boolean) && !isLoading;
 
   const onSaveCourseClicked = async (e) => {
@@ -122,7 +122,7 @@ const NewCourse = () => {
           className={`form__input ${validCurrYearClass}`}
           id="curryear"
           name="curryear"
-          type="curryear"
+          type="number"
           value={currYear}
           onChange={onCurrYearChanged}
         />

@@ -319,6 +319,7 @@ tr {
 .form__submit-button {
   padding: 0.3em;
   border-radius: 15px;
+  width: fit-content;
 }
 
 .form__input--text {

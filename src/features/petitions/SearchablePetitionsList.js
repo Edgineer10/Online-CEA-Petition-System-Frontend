@@ -9,11 +9,12 @@ import useAuth from "../../hooks/useAuth";
 
 
 const SearchablePetitionsList = ({ petitions }) => {
-    const { id, courseProg, role } = useAuth();
+    const { id, courseProg, role, currYear } = useAuth();
     const user = {
         id: id,
         courseProg: courseProg,
-        role: role
+        role: role,
+        currYear: currYear
     };
 
     const [filterWord, setFilterWorld] = useState("");
@@ -71,8 +72,8 @@ const SearchablePetitionsList = ({ petitions }) => {
                             onChange={onFilterWordChanged}
                         />
 
-                        {user.role === "Student" && <Link className="naviBut" to="/dash/petitions/new">
-                            <FontAwesomeIcon icon={faCirclePlus} /> Create Petition</Link>}
+                        <Link className="naviBut" to="/dash/petitions/new">
+                            <FontAwesomeIcon icon={faCirclePlus} /> Create Petition</Link>
                     </label>
 
                 </p>
