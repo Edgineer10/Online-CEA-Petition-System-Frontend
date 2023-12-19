@@ -22,6 +22,7 @@ import NotAllowed from "./components/NotAllowed.js";
 import { ROLE } from "./config/role.js";
 import useTitle from "./hooks/useTitle.js";
 import ArrangedCourse from "./features/courses/ArrangedCourses.js";
+import ArrangedUsers from "./features/users/ArrangedUsers.js";
 function App() {
   useTitle('UC-CEA Online Petition')
   return (
@@ -49,13 +50,14 @@ function App() {
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
                     <Route path="new" element={<NewUserForm />} />
+                    <Route path="general" element={<ArrangedUsers />} />
                   </Route>
 
                   <Route path="courses"> {/*Courses path route*/}
-                    <Route index element={<CoursesList />} />
+                    <Route index element={<ArrangedCourse />} />
                     <Route path=":id" element={<EditCourse />} />
                     <Route path="new" element={<NewCourse />} />
-                    <Route path="general" element={<ArrangedCourse />} />
+                    <Route path="general" element={<CoursesList />} />
                   </Route>
                 </Route>
 

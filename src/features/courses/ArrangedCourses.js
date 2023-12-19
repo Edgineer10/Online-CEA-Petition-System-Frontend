@@ -2,15 +2,17 @@ import Course from "./Course"
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 import { useGetCoursesQuery } from "./coursesApiSlice";
 const ArrangedCourse = () => {
+
     const { courses } = useGetCoursesQuery("coursesList", {
         selectFromResult: ({ data }) => ({
             courses: data?.ids.map((id) => data?.entities[id]),
         }),
     });
+
     const pOptions = Object.keys(PROGRAM).map((program, i) => {
         return (
             <option key={program} value={program}>
@@ -34,11 +36,6 @@ const ArrangedCourse = () => {
     const onCurrYearChanged = (e) => setCurrYear(e.target.value)
     const onCourseYearChanged = (e) => setCourseYear(e.target.value)
     const onCourseSemChanged = (e) => setCourseSem(e.target.value)
-
-
-
-    const [filterWord, setFilterWorld] = useState("");
-    const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
     let content
     if (courses) {
         const result = courses.filter((course) => {
@@ -54,8 +51,16 @@ const ArrangedCourse = () => {
         content = (
             <>
                 <div className="form">
-                    <Link className="naviBut" to="/dash/courses/">
-                        <FontAwesomeIcon icon={faSearch} /> Search by keyword</Link>
+                    <label
+                        className="form__label form__checkbox-container"
+                        htmlFor="user-active"
+                    >
+                        <Link className="naviBut" to="/dash/courses/general">
+                            <FontAwesomeIcon icon={faSearch} /> Search by keyword</Link>
+                        <Link className="naviBut" to="/dash/courses/new">
+                            <FontAwesomeIcon icon={faSquarePlus} /> Add Course</Link>
+                    </label>
+
                     <div className="form__title-row">
                         <h2>View Courses</h2>
                     </div>
@@ -111,6 +116,8 @@ const ArrangedCourse = () => {
                 {result.length !== 0 &&
                     <>
                         <br />
+                        <p><b> {"Showing the subjects for " + currYear + " " + courseProg + " Year: " + courseYear + " Term: " + courseSem + " "}</b></p>
+
 
                         <table className="table table--courses">
                             <thead className="table__thead">

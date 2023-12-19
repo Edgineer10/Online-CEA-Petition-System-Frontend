@@ -1,7 +1,16 @@
 import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import SearchablePetitionsList from "./SearchablePetitionsList";
 import useTitle from "../../hooks/useTitle";
+import useAuth from "../../hooks/useAuth";
 const PetitionsList = () => {
+
+    const { id, courseProg, role, currYear } = useAuth();
+    const user = {
+        id: id,
+        courseProg: courseProg,
+        role: role,
+        currYear: currYear
+    };
     useTitle('UC-CEA On-going Petitions')
     const {
         data: petitions,
@@ -24,7 +33,7 @@ const PetitionsList = () => {
 
     if (isSuccess) {
         const { entities } = petitions
-        content = (<SearchablePetitionsList petitions={Object.values(entities)} />)
+        content = (<SearchablePetitionsList petitions={Object.values(entities)} user={user} />)
     }
 
     return content

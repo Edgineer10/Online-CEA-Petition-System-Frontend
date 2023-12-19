@@ -38,7 +38,7 @@ const SearchableCoursesList = ({ courses }) => {
                                 value={filterWord}
                                 onChange={onFilterWordChanged}
                             />
-                            <Link className="naviBut" to="/dash/courses/general">
+                            <Link className="naviBut" to="/dash/courses/">
                                 <FontAwesomeIcon icon={faSearch} /> Filtered Search</Link>
                             <Link className="naviBut" to="/dash/courses/new">
                                 <FontAwesomeIcon icon={faSquarePlus} /> Add Course</Link>

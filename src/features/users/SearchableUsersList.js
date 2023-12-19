@@ -1,7 +1,7 @@
 import User from "./User";
 import { useState } from "react";
 import {
-    faUserPlus
+    faUserPlus, faSearch
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
@@ -57,6 +57,8 @@ const SearchableUsersList = ({ users }) => {
                             <Link className="naviBut" to="/dash/users/new">
 
                                 <FontAwesomeIcon icon={faUserPlus} /> Add {role === "Instructor" ? "Student" : "User"}</Link>
+                            <Link className="naviBut" to="/dash/users/general">
+                                <FontAwesomeIcon icon={faSearch} /> Filtered Search</Link>
                         </label>
 
                     </p>

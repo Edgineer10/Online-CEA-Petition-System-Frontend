@@ -5,18 +5,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
-import useAuth from "../../hooks/useAuth";
 
 
-const SearchablePetitionsList = ({ petitions }) => {
-    const { id, courseProg, role, currYear } = useAuth();
-    const user = {
-        id: id,
-        courseProg: courseProg,
-        role: role,
-        currYear: currYear
-    };
-
+const SearchablePetitionsList = ({ petitions, user }) => {
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
 
