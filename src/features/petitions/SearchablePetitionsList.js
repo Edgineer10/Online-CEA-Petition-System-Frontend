@@ -8,6 +8,10 @@ import { Link } from 'react-router-dom'
 
 
 const SearchablePetitionsList = ({ petitions, user }) => {
+
+    petitions.sort(function (a, b) {
+        return b.petitionee.length - a.petitionee.length;
+    });
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
 

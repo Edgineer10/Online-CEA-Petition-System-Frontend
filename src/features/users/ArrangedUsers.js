@@ -56,10 +56,6 @@ const SearchableUsersList = () => {
     const onUserGenderChanged = (e) => setUserGender(e.target.value)
     const onUserCurrYearChanged = (e) => setUserCurrYear(e.target.value)
 
-
-
-    const [filterWord, setFilterWorld] = useState("");
-    const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
     let content
 
     if (users) {

@@ -83,7 +83,10 @@ const EditPetitionForm = ({ petition, user }) => {
           </div>
         </div>
         <PetitionDetails petition={petition} />
-
+        <label
+          className="form__label form__checkbox-container remark"
+          htmlFor="user-active"
+        >REMARK: <b>{petition.remark}</b></label>
         {(user.role === "Student" && petition.status === "On-going") && <label
           className="form__label form__checkbox-container"
           htmlFor="user-active"

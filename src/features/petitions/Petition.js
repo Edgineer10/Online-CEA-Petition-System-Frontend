@@ -19,7 +19,7 @@ const Petition = ({ petitionId, user }) => {
       <tr className="table__row user">
         <td className={`table__cell `}>{petition.courseProg.join(", ") + " " + petition.currYear}</td>
         <td className={`table__cell `}>{petition.courseCode}<br />{status}</td>
-        <td className={`table__cell `}>{petition.descTitle}</td>
+        <td className={`table__cell `}>{petition.descTitle}<br /><span className="note__status--completed">Remark: {petition.remark}</span></td>
         <td className={`table__cell `}>{petition.unit}</td>
         <td className={`table__cell `}>{petition.schedule}</td>
         <td className={`table__cell `}>{petition.petitionee.length} <br />
@@ -44,7 +44,7 @@ const Petition = ({ petitionId, user }) => {
       <tr className="table__row user">
         <td className={`table__cell `}>{petition.courseProg.join(", ") + " " + petition.currYear}</td>
         <td className={`table__cell `}>{petition.courseCode}<br />{status}</td>
-        <td className={`table__cell `}>{petition.descTitle}</td>
+        <td className={`table__cell `}>{petition.descTitle}<br /><span className="note__status--completed">Remark: {petition.remark}</span></td>
         <td className={`table__cell `}>{petition.unit}</td>
         <td className={`table__cell `}>{petition.schedule}</td>
         <td className={`table__cell `}>{petition.petitionee.length} <br /> {joined}

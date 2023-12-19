@@ -5,7 +5,7 @@ import {
 } from "./petitionsApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faSave } from "@fortawesome/free-solid-svg-icons";
 import PetitionDetails from "./PetitionDetails";
 import PetitioneeTable from "./PetitioneeTable";
 import { useGetUsersQuery } from "../users/usersApiSlice";
@@ -37,6 +37,10 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
 
     const [idNumber, setIdNumber] = useState("");
+    const [remark, setRemark] = useState(petition.remark);
+    const validRemarkClass = !remark ? "form__input--incomplete" : "";
+
+    const onRemarkChanged = (e) => setRemark(e.target.value)
 
     const { users } = useGetUsersQuery("usersList", {
         selectFromResult: ({ data }) => ({
@@ -44,7 +48,10 @@ const EditPetitionFormAd = ({ petition, user }) => {
         }),
     })
 
-
+    const canSave =
+        [
+            remark
+        ].every(Boolean) && !isLoading;
     const aduser = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === idNumber }) : null;
     const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
 
@@ -72,6 +79,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
                     course: petition.course,
                     schedule: petition.schedule,
                     status: petition.status,
+                    remark: petition.remark,
                     petitionee: [...petition.petitionee, aduser.id],
                 })
             } else {
@@ -94,6 +102,8 @@ const EditPetitionFormAd = ({ petition, user }) => {
                 id: petition.id,
                 course: petition.course,
                 schedule: petition.schedule,
+                remark: petition.remark,
+                status: petition.status,
                 petitionee: petition.petitionee.filter((userr) => {
                     return userr !== id
                 })
@@ -109,6 +119,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
                 id: petition.id,
                 course: petition.course,
                 schedule: petition.schedule,
+                remark: petition.remark,
                 status: "Opened",
                 petitionee: petition.petitionee
             })
@@ -117,6 +128,7 @@ const EditPetitionFormAd = ({ petition, user }) => {
                 id: petition.id,
                 course: petition.course,
                 schedule: petition.schedule,
+                remark: petition.remark,
                 status: "On-going",
                 petitionee: petition.petitionee
             })
@@ -124,6 +136,19 @@ const EditPetitionFormAd = ({ petition, user }) => {
 
 
     }
+
+    const onSavePetitionClicked = async (e) => {
+        if (canSave) {
+            await updatePetition({
+                id: petition.id,
+                course: petition.course,
+                schedule: petition.schedule,
+                remark: remark,
+                status: petition.status,
+                petitionee: petition.petitionee
+            })
+        }
+    };
 
     const onIdNumberChanged = (e) => {
         setIdNumber(e.target.value)
@@ -138,7 +163,10 @@ const EditPetitionFormAd = ({ petition, user }) => {
                 <div className="form__title-row">
                     <h2>Petition Details</h2>
                     <div className="form__action-buttons">
-
+                        <button className="icon-button" title="Save" disabled={!canSave}
+                            onClick={onSavePetitionClicked}>
+                            <FontAwesomeIcon icon={faSave} />
+                        </button>
                         <button
                             className="icon-button"
                             title="Delete"
@@ -149,7 +177,17 @@ const EditPetitionFormAd = ({ petition, user }) => {
                     </div>
                 </div>
                 <PetitionDetails petition={petition} onSBclicked={onSBclicked} />
-
+                <label className="form__label" htmlFor="schedule">
+                    Remark:{" "}
+                </label>
+                <input
+                    className={`form__input ${validRemarkClass}`}
+                    id="remark"
+                    name="remark"
+                    type="text"
+                    value={remark}
+                    onChange={onRemarkChanged}
+                />
                 {(user.role === "Admin" || user.role === "Instructor") && <label
                     className="form__label form__checkbox-container"
                     htmlFor="user-active"
