@@ -42,6 +42,7 @@ const EditPetitionForm = ({ petition, user }) => {
           course: petition.course,
           schedule: petition.schedule,
           status: petition.status,
+          remark: petition.remark,
           petitionee: [...petition.petitionee, user.id],
         })
         onJoinChanged();
@@ -55,6 +56,7 @@ const EditPetitionForm = ({ petition, user }) => {
             course: petition.course,
             schedule: petition.schedule,
             status: petition.status,
+            remark: petition.remark,
             petitionee: petition.petitionee.filter((userr) => {
               return userr !== user.id
             })

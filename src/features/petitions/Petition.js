@@ -32,7 +32,7 @@ const Petition = ({ petitionId, user }) => {
       </tr>
     );
   }
-  else if (petition && user.role === "Student" && (petition.courseProg.includes(user.courseProg) && petition.currYear === user.currYear)) {
+  else if (petition && user.role === "Student" && ((petition.courseProg.includes(user.courseProg) && petition.currYear === user.currYear) || petition.petitionee.includes(user.id))) {
     const joined = petition.petitionee.includes(user.id) ? <span className="note__status--completed">Joined</span>
       : null
     const status = petition.status === "On-going" ? <span className="pet__status--completed">{petition.status}</span>

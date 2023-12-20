@@ -22,6 +22,7 @@ const SearchablePetitionsList = ({ petitions, user }) => {
             petition.descTitle.toLowerCase().includes(filterWord.toLowerCase()) ||
             petition.status.toLowerCase().includes(filterWord.toLowerCase())
     })
+
     // Items per page
     const itemsPerPage = 10;
 
