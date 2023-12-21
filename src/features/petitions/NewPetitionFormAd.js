@@ -63,8 +63,6 @@ const NewCourseFormAd = ({ courses }) => {
 
     }, [mcourse]);
 
-    console.log(course)
-
     const onProgramChanged = (e) => setProgram(e.target.value);
     const onCourseChanged = (e) => setCourse(e.target.value);
     const onScheduleChanged = (e) => setSchedule(e.target.value);
