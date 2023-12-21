@@ -6,7 +6,7 @@ import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { PROGRAM } from "../../config/program";
 import { ROLE } from "../../config/role";
 
-const EditUserForm = ({ user }) => {
+const EditUserForm = ({ user, mrole }) => {
   const [updateUser, { isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation();
 
@@ -146,6 +146,17 @@ const EditUserForm = ({ user }) => {
 
   const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
+  const deleteBut =
+    mrole === "Admin" ? (
+      <button
+        className="icon-button"
+        title="Delete"
+        onClick={onDeleteUserClicked}
+      >
+        <FontAwesomeIcon icon={faTrashCan} />
+      </button>
+    ) : null;
+
   const content = (
     <>
       <p className={errClass}>{errContent}</p>
@@ -157,13 +168,7 @@ const EditUserForm = ({ user }) => {
             <button className="icon-button" title="Save" disabled={!canSave}>
               <FontAwesomeIcon icon={faSave} />
             </button>
-            <button
-              className="icon-button"
-              title="Delete"
-              onClick={onDeleteUserClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+            {deleteBut}
           </div>
         </div>
 
@@ -314,7 +319,6 @@ const EditUserForm = ({ user }) => {
       </form>
     </>
   );
-
   return content;
 };
 export default EditUserForm;

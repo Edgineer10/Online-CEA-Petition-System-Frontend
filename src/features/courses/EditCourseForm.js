@@ -27,7 +27,6 @@ const EditCourseForm = ({ course, role }) => {
   const [courseYear, setCourseYear] = useState(course.courseYear);
   const [courseSem, setCourseSem] = useState(course.courseSem);
 
-  console.log();
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
       setCourseProg([]);
@@ -58,12 +57,12 @@ const EditCourseForm = ({ course, role }) => {
   const canSave =
     [
       courseProg.length ||
-      currYear ||
-      courseCode ||
-      descTitle ||
-      unit ||
-      courseYear ||
-      courseSem,
+        currYear ||
+        courseCode ||
+        descTitle ||
+        unit ||
+        courseYear ||
+        courseSem,
     ].every(Boolean) && !isLoading;
 
   const onSaveCourseClicked = async (e) => {
@@ -86,9 +85,8 @@ const EditCourseForm = ({ course, role }) => {
     await deleteCourse({ id: course.id });
   };
 
-  let deleteButton = null;
-  if (role === "Admin") {
-    deleteButton = (
+  const deleteButton =
+    role === "Admin" ? (
       <button
         className="icon-button"
         title="Delete"
@@ -96,8 +94,7 @@ const EditCourseForm = ({ course, role }) => {
       >
         <FontAwesomeIcon icon={faTrashCan} />
       </button>
-    );
-  }
+    ) : null;
 
   const options = Object.keys(PROGRAM).map((program) => {
     return (
