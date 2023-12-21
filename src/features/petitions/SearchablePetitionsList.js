@@ -14,9 +14,11 @@ const SearchablePetitionsList = ({ petitions, user }) => {
     });
     const [filterWord, setFilterWorld] = useState("");
     const onFilterWordChanged = (e) => setFilterWorld(e.target.value)
-
+    const reduced = user.role !== "Student" ? petitions : petitions.filter((petition) => {
+        return (petition.courseProg.includes(user.courseProg) && petition.currYear === user.currYear) || petition.petitionee.includes(user.id)
+    })
     let content
-    const result = petitions.filter((petition) => {
+    const result = reduced.filter((petition) => {
         return petition.courseCode.toLowerCase().includes(filterWord.toLowerCase()) ||
             petition.courseProg.toString().toLowerCase().includes(filterWord.toLowerCase()) ||
             petition.descTitle.toLowerCase().includes(filterWord.toLowerCase()) ||

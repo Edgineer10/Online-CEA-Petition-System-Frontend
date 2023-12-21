@@ -41,6 +41,7 @@ const NewCourseFormAd = ({ courses }) => {
     const [schedule, setSchedule] = useState("");
     const userfound = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === petitionee }) : null;
     const choices = users ? users.filter(user => { return user.idNumber.includes(petitionee) && user.role === "Student" }) : null;
+    let mcourse = fcourse.length ? fcourse[0].id : ''
     let usermatch = null;
 
     if (choices) {
@@ -56,6 +57,13 @@ const NewCourseFormAd = ({ courses }) => {
             navigate("/dash/petitions");
         }
     }, [isSuccess, navigate]);
+
+    useEffect(() => {
+        setCourse(mcourse)
+
+    }, [mcourse]);
+
+    console.log(course)
 
     const onProgramChanged = (e) => setProgram(e.target.value);
     const onCourseChanged = (e) => setCourse(e.target.value);
