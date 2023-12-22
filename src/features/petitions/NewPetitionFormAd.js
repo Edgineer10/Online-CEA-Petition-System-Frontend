@@ -7,16 +7,30 @@ import { PROGRAM } from "../../config/program";
 import { useGetUsersQuery } from "../users/usersApiSlice";
 import Usermatch from "./Usermatch";
 
-
 const NewCourseFormAd = ({ courses }) => {
-    const [addNewPetition, { isLoading, isSuccess, isError, error }] =
+
+    const [addNewPetition,
+        { isLoading, isSuccess, isError, error }] =
         useAddNewPetitionMutation();
+
     const navigate = useNavigate();
+
     const { users } = useGetUsersQuery("usersList", {
         selectFromResult: ({ data }) => ({
             users: data?.ids.map(id => data?.entities[id])
         }),
     })
+
+
+
+    const [program, setProgram] = useState(Object.keys(PROGRAM)[0]);
+    const [currYear, setCurrYear] = useState("2018");
+    const fcourse = Object.values(courses).filter(course => { return course.courseProg.includes(program) && course.currYear.toString() === currYear.toString() })
+    const [course, setCourse] = useState(fcourse.length ? fcourse[0].id : '');
+    const [petitionee, setPetitionee] = useState("");
+    const [schedule, setSchedule] = useState("");
+    const userfound = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === petitionee }) : null;
+    const choices = users ? users.filter(user => { return user.idNumber.includes(petitionee) && user.role === "Student" }) : null;
 
     const pOptions = Object.keys(PROGRAM).map((program) => {
         return (
@@ -26,9 +40,6 @@ const NewCourseFormAd = ({ courses }) => {
         );
     });
 
-    const [program, setProgram] = useState(Object.keys(PROGRAM)[0]);
-    const [currYear, setCurrYear] = useState("2018");
-    const fcourse = Object.values(courses).filter(course => { return course.courseProg.includes(program) && course.currYear.toString() === currYear.toString() })
     const options = fcourse.map((course) => {
         return (
             <option key={course.id} value={course.id}>
@@ -36,17 +47,12 @@ const NewCourseFormAd = ({ courses }) => {
             </option>
         )
     });
-    const [course, setCourse] = useState(fcourse.length ? fcourse[0].id : '');
-    const [petitionee, setPetitionee] = useState("");
-    const [schedule, setSchedule] = useState("");
-    const userfound = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === petitionee }) : null;
-    const choices = users ? users.filter(user => { return user.idNumber.includes(petitionee) && user.role === "Student" }) : null;
-    let mcourse = fcourse.length ? fcourse[0].id : ''
-    let usermatch = null;
 
-    if (choices) {
-        usermatch = <Usermatch key={choices.length} choices={choices} />
-    }
+
+
+    let mcourse = fcourse.length ? fcourse[0].id : ''
+    const usermatch = choices ? <Usermatch key={choices.length} choices={choices} /> : null;
+
 
 
     useEffect(() => {
@@ -68,13 +74,14 @@ const NewCourseFormAd = ({ courses }) => {
     const onScheduleChanged = (e) => setSchedule(e.target.value);
     const onPetitioneeChanged = (e) => setPetitionee(e.target.value);
     const onCurrYearChanged = (e) => setCurrYear(e.target.value);
-    const canSave =
-        [
-            course &&
-            schedule &&
-            program &&
-            petitionee
-        ].every(Boolean) && !isLoading;
+    const canSave = course && schedule && program && petitionee && !isLoading;
+
+    const errClass = isError ? "errmsg" : "offscreen";
+    const validCourseClass = !course ? "form__input--incomplete" : "";
+    const validScheduleClass = !schedule ? "form__input--incomplete" : "";
+    const validProgramClass = !program ? "form__input--incomplete" : "";
+    const validPetitioneeClass = !petitionee ? "form__input--incomplete" : "";
+    const validCurrYearClass = !currYear ? "form__input--incomplete" : "";
 
     const onSavePetitionClicked = async (e) => {
         e.preventDefault();
@@ -89,14 +96,6 @@ const NewCourseFormAd = ({ courses }) => {
             window.alert("No user found")
         }
     };
-
-
-    const errClass = isError ? "errmsg" : "offscreen";
-    const validCourseClass = !course ? "form__input--incomplete" : "";
-    const validScheduleClass = !schedule ? "form__input--incomplete" : "";
-    const validProgramClass = !program ? "form__input--incomplete" : "";
-    const validPetitioneeClass = !petitionee ? "form__input--incomplete" : "";
-    const validCurrYearClass = !currYear ? "form__input--incomplete" : "";
 
     const content = (
         <>

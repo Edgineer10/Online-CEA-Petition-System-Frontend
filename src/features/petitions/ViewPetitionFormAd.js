@@ -24,7 +24,6 @@ const EditPetitionFormAd = ({ petition, user }) => {
     useEffect(() => {
         if (isSuccess) {
             navigate();
-
         }
         if (isDelSuccess) {
             navigate(`/dash/petitions/`);
@@ -48,29 +47,18 @@ const EditPetitionFormAd = ({ petition, user }) => {
         }),
     })
 
-    const canSave =
-        [
-            remark
-        ].every(Boolean) && !isLoading;
+    const canSave = [remark].every(Boolean) && !isLoading;
     const aduser = users ? users.find(user => { return user.idNumber.replace(/\s/g, '') === idNumber }) : null;
     const choices = users ? users.filter(user => { return user.idNumber.includes(idNumber) && user.role === "Student" }) : null;
 
-
-
-    let usermatch = null;
-    if (idNumber.length >= 2 && choices) {
-        usermatch = <Usermatch key={choices.length} choices={choices} />
-    }
+    const usermatch = (idNumber.length >= 2 && choices) ? <Usermatch key={choices.length} choices={choices} /> : null;
 
     const onDeletePetitionClicked = async (e) => {
         e.preventDefault()
         await deletePetition({ id: petition.id });
     };
 
-
-
     const onAddPetitioneeClicked = async (e) => {
-
         e.preventDefault();
         if (!isLoading && aduser) {
             if (aduser && !petition.petitionee.includes(aduser.id) && aduser.role === "Student") {
@@ -119,25 +107,28 @@ const EditPetitionFormAd = ({ petition, user }) => {
                 id: petition.id,
                 course: petition.course,
                 schedule: petition.schedule,
-                remark: petition.remark,
+                remark: "SUBJECT OPENED FOR ENROLMENT",
                 status: "Opened",
                 petitionee: petition.petitionee
             })
+            setRemark("SUBJECT OPENED FOR ENROLMENT")
         } else {
             await updatePetition({
                 id: petition.id,
                 course: petition.course,
                 schedule: petition.schedule,
-                remark: petition.remark,
+                remark: "WAITING FOR MORE PETITIONEE",
                 status: "On-going",
                 petitionee: petition.petitionee
             })
+            setRemark("WAITING FOR MORE PETITIONEE")
         }
 
 
     }
 
     const onSavePetitionClicked = async (e) => {
+        e.preventDefault()
         if (canSave) {
             await updatePetition({
                 id: petition.id,

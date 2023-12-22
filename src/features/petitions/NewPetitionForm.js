@@ -5,9 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 const NewCourseForm = ({ courses, user }) => {
-  const [addNewPetition, { isLoading, isSuccess, isError, error }] =
-    useAddNewPetitionMutation();
+
+  const [addNewPetition,
+    { isLoading, isSuccess, isError, error }] = useAddNewPetitionMutation();
   const navigate = useNavigate();
+
   const fcourse = Object.values(courses).filter((course) => {
     return (
       course.courseProg.includes(user.courseProg) &&
@@ -26,6 +28,15 @@ const NewCourseForm = ({ courses, user }) => {
   const [petitionee, setPetitionee] = useState([user.id]);
   const [schedule, setSchedule] = useState("");
 
+
+  const onCourseChanged = (e) => setCourse(e.target.value);
+  const onScheduleChanged = (e) => setSchedule(e.target.value);
+  const canSave = [course && schedule].every(Boolean) && !isLoading;
+
+  const errClass = isError ? "errmsg" : "offscreen";
+  const validCourseClass = !course ? "form__input--incomplete" : "";
+  const validScheduleClass = !schedule ? "form__input--incomplete" : "";
+
   useEffect(() => {
     if (isSuccess) {
       setCourse("");
@@ -35,9 +46,6 @@ const NewCourseForm = ({ courses, user }) => {
     }
   }, [isSuccess, navigate]);
 
-  const onCourseChanged = (e) => setCourse(e.target.value);
-  const onScheduleChanged = (e) => setSchedule(e.target.value);
-  const canSave = [course && schedule].every(Boolean) && !isLoading;
 
   const onSavePetitionClicked = async (e) => {
     e.preventDefault();
@@ -50,10 +58,6 @@ const NewCourseForm = ({ courses, user }) => {
       });
     }
   };
-
-  const errClass = isError ? "errmsg" : "offscreen";
-  const validCourseClass = !course ? "form__input--incomplete" : "";
-  const validScheduleClass = !schedule ? "form__input--incomplete" : "";
 
   const content = (
     <>

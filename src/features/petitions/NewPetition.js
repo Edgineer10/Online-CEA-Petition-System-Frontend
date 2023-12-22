@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import useTitle from "../../hooks/useTitle";
 
 const NewPetition = () => {
+
   useTitle("UC-CEA Add New Petition");
 
   const { courses } = useGetCoursesQuery("coursesList", {
@@ -21,20 +22,8 @@ const NewPetition = () => {
     currYear: currYear,
   };
 
-  let content = null;
-  if (user.role === "Student") {
-    content = courses ? (
-      <NewPetitionForm courses={courses} user={user} />
-    ) : (
-      <p>Loading...</p>
-    );
-  } else {
-    content = courses ? (
-      <NewPetitionFormAd courses={courses} />
-    ) : (
-      <p>Loading...</p>
-    );
-  }
+  const petitionform = user.role === "Student" ? <NewPetitionForm courses={courses} user={user} /> : <NewPetitionFormAd courses={courses} />
+  const content = courses ? petitionform : <p>Loading...</p>
 
   return content;
 };

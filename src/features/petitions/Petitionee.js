@@ -16,11 +16,10 @@ const Petitionee = ({ userId, curUser, onDeleteStudent }) => {
       }),
     })
 
+  const cellStatus = user.active ? "" : "table__cell--inactive";
 
-  if (user && curUser.role === "Student") {
-    const cellStatus = user.active ? "" : "table__cell--inactive";
-
-    return (
+  const content = user ?
+    <>
       <tr className="table__row user">
         <td className={`table__cell ${cellStatus}`}>{user.idNumber}</td>
         <td className={`table__cell ${cellStatus}`}>
@@ -29,25 +28,7 @@ const Petitionee = ({ userId, curUser, onDeleteStudent }) => {
         <td className={`table__cell ${cellStatus}`}>
           {user.courseProg + " " + user.year}
         </td>
-      </tr>
-
-
-
-
-    );
-  } else if (user && (curUser.role === "Admin" || curUser.role === "Instructor")) {
-    const cellStatus = user.active ? "" : "table__cell--inactive";
-
-    return (
-      <tr className="table__row user">
-        <td className={`table__cell ${cellStatus}`}>{user.idNumber}</td>
-        <td className={`table__cell ${cellStatus}`}>
-          {user.lastName + ", " + user.firstName + " " + user.middleName}
-        </td>
-        <td className={`table__cell ${cellStatus}`}>
-          {user.courseProg + " " + user.year}
-        </td>
-        <td className={`table__cell ${cellStatus}`}>
+        {(curUser.role === "Admin" || curUser.role === "Instructor") && <td className={`table__cell ${cellStatus}`}>
           <button
             className="unjoin-button"
             title="Delete"
@@ -55,15 +36,11 @@ const Petitionee = ({ userId, curUser, onDeleteStudent }) => {
           >
             Remove
           </button>
-        </td>
+        </td>}
       </tr>
-
-
-
-
-    );
-  }
-  else return null;
+    </>
+    : null
+  return content
 };
 const memoizedPetionee = memo(Petitionee)
 export default memoizedPetionee;
