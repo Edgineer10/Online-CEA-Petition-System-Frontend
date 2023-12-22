@@ -33,6 +33,7 @@ const PetitionsList = () => {
 
     if (isSuccess) {
         const { entities } = petitions
+        console.log("Is Success")
         content = (<SearchablePetitionsList petitions={Object.values(entities)} user={user} />)
     }
 

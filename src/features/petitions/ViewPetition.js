@@ -3,7 +3,7 @@ import { useGetPetitionsQuery } from "./petitionsApiSlice"
 import ViewPetiionForm from "./ViewPetitionForm"
 import ViewPetiionFormAd from "./ViewPetitionFormAd"
 import useAuth from "../../hooks/useAuth"
-import useTitle from "../../hooks/useTitle"
+
 const ViewPetiion = () => {
   const { petid } = useParams();
 
@@ -13,7 +13,6 @@ const ViewPetiion = () => {
     courseProg: courseProg,
     role: role
   };
-  let content = null
 
   const { petition } = useGetPetitionsQuery("petitionsList", {
     selectFromResult: ({ data }) => ({
@@ -21,21 +20,8 @@ const ViewPetiion = () => {
     }),
   })
 
-
-  if (user.role === "Student") {
-    content = petition ? (
-      <ViewPetiionForm petition={petition} user={user} />
-    ) : (
-      <p>Loading...</p>
-    );
-  } else {
-    content = petition ? (
-      <ViewPetiionFormAd petition={petition} user={user} />
-    ) : (
-      <p>Loading...</p>
-    )
-  }
-
+  const petitonform = user.role === "Student" ? <ViewPetiionForm petition={petition} user={user} /> : <ViewPetiionFormAd petition={petition} user={user} />
+  const content = petition ? petitonform : <p>Loading...</p>
   return content;
 };
 export default ViewPetiion;

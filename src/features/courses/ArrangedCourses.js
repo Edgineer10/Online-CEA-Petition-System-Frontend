@@ -36,16 +36,20 @@ const ArrangedCourse = () => {
     const onCurrYearChanged = (e) => setCurrYear(e.target.value)
     const onCourseYearChanged = (e) => setCourseYear(e.target.value)
     const onCourseSemChanged = (e) => setCourseSem(e.target.value)
-    let content
+
+    let content = null
+
     if (courses) {
+
         const result = courses.filter((course) => {
             return course.courseProg.includes(courseProg) &&
                 course.courseYear.toString().toLowerCase() === courseYear.toString().toLowerCase() &&
                 course.courseSem.toString().toLowerCase() === courseSem.toString().toLowerCase() &&
                 course.currYear.toString().toLowerCase() === currYear.toString().toLowerCase()
         })
+
         const tableContent = result?.length
-            ? result.slice(0, 10).map(courseId => <Course key={courseId.id} courseId={courseId.id} />)
+            ? result.map(courseId => <Course key={courseId.id} courseId={courseId.id} />)
             : null
 
         content = (
@@ -64,52 +68,59 @@ const ArrangedCourse = () => {
                     <div className="form__title-row">
                         <h2>View Courses</h2>
                     </div>
-                    <label className="form__label" htmlFor="course">
-                        Program :
-                    </label>
-                    <select
-                        id="program"
-                        name="program"
-                        className={`form__select ${validProgramClass}`}
-                        value={courseProg}
-                        onChange={onCourseProgramChanged}
 
+                    <label
+                        className="form__label form__checkbox-container"
+                        htmlFor="user-active"
                     >
-                        {pOptions}
-                    </select>
-                    <label className="form__label" htmlFor="curryear">
-                        Curriculum Year:{" "}
+                        <label className="form__label" htmlFor="course">
+                            Program : <select
+                                id="program"
+                                name="program"
+                                className={`form__select ${validProgramClass}`}
+                                value={courseProg}
+                                onChange={onCourseProgramChanged}
+
+                            >
+                                {pOptions}
+                            </select>
+                        </label>
+
+                        <label className="form__label" htmlFor="curryear">
+                            Curriculum Year: <input
+                                className={`form__input ${validCurrYearClass}`}
+                                id="curryear"
+                                name="curryear"
+                                type="number"
+                                value={currYear}
+                                onChange={onCurrYearChanged}
+                            />
+                        </label>
+
+                        <label className="form__label" htmlFor="curryear">
+                            Course Year: <input
+                                className={`form__input ${validCourseYearClass}`}
+                                id="courseYear"
+                                name="courseYear"
+                                type="number"
+                                value={courseYear}
+                                onChange={onCourseYearChanged}
+                            />
+                        </label>
+
+                        <label className="form__label" htmlFor="curryear">
+                            Course Semester: <input
+                                className={`form__input ${validCourseSemClass}`}
+                                id="courseSem"
+                                name="courseSem"
+                                type="number"
+                                value={courseSem}
+                                onChange={onCourseSemChanged}
+                            />
+                        </label>
+
                     </label>
-                    <input
-                        className={`form__input ${validCurrYearClass}`}
-                        id="curryear"
-                        name="curryear"
-                        type="number"
-                        value={currYear}
-                        onChange={onCurrYearChanged}
-                    />
-                    <label className="form__label" htmlFor="curryear">
-                        Course Year:{" "}
-                    </label>
-                    <input
-                        className={`form__input ${validCourseYearClass}`}
-                        id="courseYear"
-                        name="courseYear"
-                        type="number"
-                        value={courseYear}
-                        onChange={onCourseYearChanged}
-                    />
-                    <label className="form__label" htmlFor="curryear">
-                        Course Semester:{" "}
-                    </label>
-                    <input
-                        className={`form__input ${validCourseSemClass}`}
-                        id="courseSem"
-                        name="courseSem"
-                        type="number"
-                        value={courseSem}
-                        onChange={onCourseSemChanged}
-                    />
+
 
                 </div>
 

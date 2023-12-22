@@ -56,42 +56,51 @@ const SearchableUsersList = () => {
     const onUserGenderChanged = (e) => setUserGender(e.target.value)
     const onUserCurrYearChanged = (e) => setUserCurrYear(e.target.value)
 
-    let content
 
-    if (users) {
-        const result = users.filter((user) => {
-            if (userRole === "Student") {
-                return user.courseProg.toString() === userProgram.toString() && user.year.toString() === userYear.toString() && user.gender.toString() === userGender.toString() && user.currYear.toString() === userCurrYear.toString()
-            } else if (userRole === "Admin") {
-                return user.role === "Admin"
-            }
-            else {
-                return user.role !== "Student" && user.role !== "Admin" && user.courseProg === userProgram && user.gender === userGender
+    const result = users ? users.filter((user) => {
+        if (userRole === "Student") {
+            return user.courseProg.toString() === userProgram.toString() &&
+                user.year.toString() === userYear.toString() &&
+                user.gender.toString() === userGender.toString() &&
+                user.currYear.toString() === userCurrYear.toString()
 
-            }
-        })
-        const tableContent = result?.length
-            ? result.slice(0, 10).map(user => <User key={user.id} userId={user.id} />)
-            : null
+        } else if (userRole === "Admin") {
+            return user.role === "Admin"
+        }
+        else {
+            return user.role !== "Student" &&
+                user.role !== "Admin" &&
+                user.courseProg === userProgram &&
+                user.gender === userGender
+        }
+    }) : null
 
-        content = (
-            <>
-                <div className="form">
-                    <p>
-                        <label
-                            className="form__label form__checkbox-container"
-                            htmlFor="user-active"
-                        >
-                            <Link className="naviBut" to="/dash/users">
-                                <FontAwesomeIcon icon={faSearch} /> Search by keyword</Link>
-                            <Link className="naviBut" to="/dash/users/new">
-                                <FontAwesomeIcon icon={faUserPlus} /> Add {role === "Instructor" ? "Student" : "User"}</Link>
-                        </label>
-                    </p>
-                    {(role === "Admin") && <><label className="form__label" htmlFor="course">
-                        Role :
+    const tableContent = result?.length
+        ? result.map(user => <User key={user.id} userId={user.id} />)
+        : null
+
+
+    const content = users ? (
+        <>
+            <div className="form">
+                <p>
+                    <label
+                        className="form__label form__checkbox-container"
+                        htmlFor="user-active"
+                    >
+                        <Link className="naviBut" to="/dash/users">
+                            <FontAwesomeIcon icon={faSearch} /> Search by keyword</Link>
+                        <Link className="naviBut" to="/dash/users/new">
+                            <FontAwesomeIcon icon={faUserPlus} /> Add {role === "Instructor" ? "Student" : "User"}</Link>
                     </label>
-                        <select
+                </p>
+
+                <label
+                    className="form__label form__checkbox-container"
+                    htmlFor="user-active"
+                >
+                    {(role === "Admin") && <><label className="form__label" htmlFor="course">
+                        Role : <select
                             id="role"
                             name="role"
                             className={`form__select ${validRoleClass}`}
@@ -99,116 +108,116 @@ const SearchableUsersList = () => {
                             onChange={onUserRoleChanged}
                         >
                             {roleoptions}
-                        </select></>
+                        </select>
+                    </label>
+                    </>
                     }
                     {
                         userRole !== "Admin" &&
                         <>
                             <label className="form__label" htmlFor="course">
-                                Program :
-                            </label>
-                            <select
-                                id="program"
-                                name="program"
-                                className={`form__select ${validUserProgramClass}`}
-                                value={userProgram}
-                                onChange={onUserProgramChanged}
+                                Program : <select
+                                    id="program"
+                                    name="program"
+                                    className={`form__select ${validUserProgramClass}`}
+                                    value={userProgram}
+                                    onChange={onUserProgramChanged}
 
-                            >
-                                {pOptions}
-                            </select>
+                                >
+                                    {pOptions}
+                                </select>
+                            </label>
+
 
                         </>
                     }
-
                     {
                         userRole === "Student" &&
                         <>
                             <label className="form__label" htmlFor="curryear">
-                                Year:{" "}
+                                Year: <input
+                                    className={`form__input ${validUserYearClass}`}
+                                    id="courseYear"
+                                    name="courseYear"
+                                    type="number"
+                                    value={userYear}
+                                    onChange={onUserYearChanged}
+                                />
                             </label>
-                            <input
-                                className={`form__input ${validUserYearClass}`}
-                                id="courseYear"
-                                name="courseYear"
-                                type="number"
-                                value={userYear}
-                                onChange={onUserYearChanged}
-                            />
+
                         </>}
-
-
                     {
                         userRole !== "Admin" &&
                         <>
                             <label className="form__label" htmlFor="gender">
-                                Gender:
+                                Gender: <select
+                                    id="gender"
+                                    name="gender"
+                                    className={`form__select ${validUserGenderClass}`}
+                                    multiple={false}
+                                    size="1"
+                                    value={userGender}
+                                    onChange={onUserGenderChanged}
+                                >
+                                    <option key="Male" value="Male">
+                                        Male
+                                    </option>
+                                    <option key="Female" value="Female">
+                                        Female
+                                    </option>
+                                </select>
                             </label>
-                            <select
-                                id="gender"
-                                name="gender"
-                                className={`form__select ${validUserGenderClass}`}
-                                multiple={false}
-                                size="1"
-                                value={userGender}
-                                onChange={onUserGenderChanged}
-                            >
-                                <option key="Male" value="Male">
-                                    Male
-                                </option>
-                                <option key="Female" value="Female">
-                                    Female
-                                </option>
-                            </select>
+
                         </>
                     }
 
 
                     {userRole === "Student" && <>
                         <label className="form__label" htmlFor="curryear">
-                            Curriculum Year:{" "}
+                            Curriculum Year: <input
+                                className={`form__input ${validUserCurrYearClass}`}
+                                id="curryear"
+                                name="curryear"
+                                type="number"
+                                value={userCurrYear}
+                                onChange={onUserCurrYearChanged}
+                            />
                         </label>
-                        <input
-                            className={`form__input ${validUserCurrYearClass}`}
-                            id="curryear"
-                            name="curryear"
-                            type="number"
-                            value={userCurrYear}
-                            onChange={onUserCurrYearChanged}
-                        />
+
                     </>}
-                </div>
 
-                {result.length !== 0 &&
-                    <>
+                </label>
+            </div>
 
-                        <br />
-                        <p> Displaying search results:</p>
+            {result.length !== 0 &&
+                <>
+                    <br />
+                    <p> Displaying search results:</p>
 
-                        <table className="table table--users">
-                            <thead className="table__thead">
-                                <tr>
-                                    <th scope="col" className="table__th user__username">
-                                        ID Number
-                                    </th>
-                                    <th scope="col" className="table__th user__roles">
-                                        Name
-                                    </th>
-                                    <th scope="col" className="table__th user__roles">
-                                        Course & Year
-                                    </th>
-                                    <th scope="col" className="table__th user__edit">
-                                        Edit
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>{tableContent}</tbody>
-                        </table>
-                    </>
-                }
-            </>
-        )
-    }
+                    <table className="table table--users tableforall">
+                        <thead className="table__thead">
+                            <tr>
+                                <th scope="col" className="table__th user__username">
+                                    ID Number
+                                </th>
+                                <th scope="col" className="table__th user__roles">
+                                    Name
+                                </th>
+                                <th scope="col" className="table__th user__roles">
+                                    Course & Year
+                                </th>
+                                <th scope="col" className="table__th user__edit">
+                                    Edit
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>{tableContent}</tbody>
+                    </table>
+                </>
+            }
+        </>
+    ) : null
+
 
     return content
 }

@@ -13,11 +13,10 @@ const Course = ({ courseId }) => {
 
     const navigate = useNavigate()
 
-    if (course) {
+    const handleEdit = () => navigate(`/dash/courses/${courseId}`)
 
-        const handleEdit = () => navigate(`/dash/courses/${courseId}`)
-
-        return (
+    const content = course ? (
+        <>
             <tr className="table__row">
                 <td className="table__cell ">{course.courseProg.join(", ") + " " + course.currYear}</td>
                 <td className="table__cell ">{"year: " + course.courseYear + " term: " + course.courseSem}</td>
@@ -34,9 +33,11 @@ const Course = ({ courseId }) => {
                     </button>
                 </td>
             </tr>
-        )
+        </>) : null
 
-    } else return null
+
+    return content
+
 }
 const memoizedCourse = memo(Course)
 export default memoizedCourse
