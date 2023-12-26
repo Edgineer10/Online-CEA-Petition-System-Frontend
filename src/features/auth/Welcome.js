@@ -1,18 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 const Welcome = () => {
-  const { name, role } = useAuth();
+  const { name, role, isPWSet } = useAuth();
   const isStudent = role === "Student" ? true : false;
   const isAdmin = role === "Admin" ? true : false;
   const isInstructor = role === "Instructor" ? true : false;
-
+  const location = useLocation();
   const date = new Date();
   const today = new Intl.DateTimeFormat("en-US", {
     dateStyle: "full",
     timeStyle: "long",
   }).format(date);
 
-  const content = (
+  const content = isPWSet ? (
     <section className="welcome">
       <p>{today}</p>
 
@@ -26,7 +26,7 @@ const Welcome = () => {
       {<p><Link to="/dash/user">Edit Password</Link></p>}
 
     </section>
-  );
+  ) : <Navigate to="/dash/user" state={{ from: location }} replace />;
 
   return content;
 };

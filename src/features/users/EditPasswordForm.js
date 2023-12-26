@@ -20,7 +20,7 @@ const EditPasswordForm = ({ user }) => {
         if (isSuccess) {
             setPassword("");
             setPassword2("");
-            navigate("/dash");
+            navigate("/login");
         }
     }, [isSuccess, navigate]);
 
@@ -36,6 +36,7 @@ const EditPasswordForm = ({ user }) => {
         if (canSave) {
             await updateUser({
                 id: user.id,
+                idNumber: user.idNumber,
                 password: password,
                 role: user.role,
                 firstName: user.firstName,
@@ -43,6 +44,8 @@ const EditPasswordForm = ({ user }) => {
                 middleName: user.middleName,
                 birthday: user.birthday,
                 year: user.year,
+                gender: user.gender,
+                currYear: user.currYear,
                 courseProg: user.courseProg,
                 active: user.active,
             });

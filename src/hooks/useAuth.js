@@ -7,8 +7,8 @@ const useAuth = () => {
 
   if (token) {
     const decoded = jwtDecode(token);
-    const { name, idNumber, id, courseProg, role, currYear } = decoded.UserInfo;
-    return { name, idNumber, role, id, courseProg, currYear };
+    const { name, idNumber, id, courseProg, role, currYear, isPWSet } = decoded.UserInfo;
+    return { name, idNumber, role, id, courseProg, currYear, isPWSet };
   }
   return {
     name: "",
@@ -17,6 +17,7 @@ const useAuth = () => {
     courseProg: "",
     role: "",
     currYear: "",
+    isPWSet: false,
   };
 };
 export default useAuth;
